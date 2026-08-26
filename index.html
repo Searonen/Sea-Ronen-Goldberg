@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sea Ronen Goldberg | Original Custom Art & Design</title>
+
+  <style>
+
+    /* =========================
+       CSS VARIABLES & THEMES
+    ========================= */
+
+    :root {
+      --bg-color: #0e1760;
+      --accent-color: #ff6eec;
+      --accent-dim: rgba(255, 110, 236, 0.25);
+      --glass-bg: rgba(14, 23, 96, 0.6);
+      --item-height: 48vh;
+      --left-margin: 5.5vw;
+    }
+
+    body.light-mode {
+      --bg-color: #ffffff;
+      --accent-color: #d4001d;
+      --accent-dim: rgba(212, 0, 29, 0.2);
+      --glass-bg: rgba(255, 255, 255, 0.75);
+    }
+
+
+    /* =========================
+       RESET & BASE
+    ========================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--accent-color);
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      cursor: default;
+
+      transition:
+        background-color 0.4s ease,
+        color 0.4s ease;
+    }
+
+
+    /* =========================
+       FIXED VIEWPORT
+    ========================= */
+
+    .viewport-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+
+    /* =========================
+       THEME TOGGLE BUTTON (TOP-RIGHT)
+    ========================= */
+
+    .theme-toggle-btn {
+      position: fixed;
+      top: 5.5vh;
+      right: 5.5vw;
+      z-index: 50;
+      
+      width: 72px;
+      height: 36px;
+      border-radius: 20px;
+      
+      background: var(--glass-bg);
+      border: 1.5px solid var(--accent-color);
+      backdrop-filter: blur(10px);
+      
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      
+      cursor: pointer;
+      outline: none;
+      
+      transition:
+        border-color 0.4s ease,
+        background 0.4s ease,
+        transform 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .theme-icon-box {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .icon-svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--accent-color);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: stroke 0.4s ease;
+    }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s ease;
+      z-index: 1;
+    }
+
+    body:not(.light-mode) .icon-moon-box .icon-svg {
+      stroke: var(--bg-color);
+    }
+
+    body.light-mode .toggle-thumb {
+      transform: translateX(34px);
+    }
+
+    body.light-mode .icon-sun-box .icon-svg {
+      stroke: var(--bg-color);
+    }
+
+
+    /* =========================
+       TITLE & PERSISTENT ARTIST NAME
+    ========================= */
+
+    .hero-title-container {
+      position: absolute;
+      top: 5.5vh;
+      left: var(--left-margin);
+      z-index: 35;
+      cursor: pointer;
+    }
+
+    .artist-persistent-name {
+      display: inline-block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 0.35rem;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.4s ease;
+      cursor: pointer;
+    }
+
+    .artist-persistent-name:hover {
+      opacity: 1;
+    }
+
+    .hero-title-content {
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        color 0.4s ease;
+    }
+
+    .hero-title-content .eyebrow {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.1rem;
+    }
+
+    .hero-title-content h1 {
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+
+    /* =========================
+       SIDE TEXTS (CLICKABLE)
+    ========================= */
+
+    .side-text {
+      position: absolute;
+      top: 50%;
+      z-index: 30;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      white-space: nowrap;
+      writing-mode: vertical-rl;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        color 0.4s ease;
+    }
+
+    .side-text:hover {
+      opacity: 1;
+    }
+
+    .side-text-arrow {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .left-scroll {
+      left: 16px;
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .right-scroll {
+      right: 16px;
+      transform: translateY(-50%);
+    }
+
+
+    /* =========================
+       FOOTER LEFT
+    ========================= */
+
+    .hero-footer {
+      position: absolute;
+      bottom: 6vh;
+      left: var(--left-margin);
+      z-index: 20;
+      pointer-events: none;
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        color 0.4s ease;
+    }
+
+    .info-block .school {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .info-block .commissions {
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
+
+    /* =========================
+       FOOTER RIGHT (CONTACT WITH ICONS)
+    ========================= */
+
+    .contact-block {
+      position: absolute;
+      bottom: 6vh;
+      right: 5.5vw;
+      z-index: 20;
+      text-align: right;
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        color 0.4s ease;
+    }
+
+    .contact-block .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 400;
+      opacity: 0.9;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .contact-item:hover {
+      opacity: 1;
+      transform: translateX(-3px);
+    }
+
+    .contact-item:hover span {
+      text-decoration: underline;
+    }
+
+    .contact-icon {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent-color);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+      transition: stroke 0.4s ease;
+    }
+
+
+    /* =========================
+       GALLERY TRACK
+    ========================= */
+
+    .gallery-track {
+      position: absolute;
+      top: 50%;
+      left: var(--left-margin);
+      height: 76vh;
+      display: flex;
+      align-items: center;
+      gap: 6vw;
+      z-index: 5;
+      will-change: transform;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      transform: translateY(-50%);
+    }
+
+    .gallery-track.ready {
+      opacity: 1;
+    }
+
+
+    /* =========================
+       END FRAME / COLOPHON CARD
+    ========================= */
+
+    .gallery-end-card {
+      height: var(--item-height);
+      width: calc(var(--item-height) * 0.75);
+      min-width: 260px;
+      max-height: 75vh;
+      flex-shrink: 0;
+      border: 1.5px solid var(--accent-color);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 24px;
+      text-align: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
+      cursor: default;
+    }
+
+    .gallery-end-card:hover {
+      transform: scale(1.02);
+    }
+
+    .end-card-header h4 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .end-card-header p {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+
+    .end-card-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .end-card-contacts a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s ease;
+    }
+
+    .end-card-contacts a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .back-home-btn {
+      background: transparent;
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-home-btn:hover {
+      background: var(--accent-color);
+      color: var(--bg-color);
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       PAINTINGS
+    ========================= */
+
+    .gallery-item {
+      display: block;
+      height: var(--item-height);
+      width: auto;
+      max-height: 75vh;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+
+    /* =========================
+       HOME SVG WRAPPER
+    ========================= */
+
+    .river-artwork-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 76vh;
+      width: auto;
+      flex-shrink: 0;
+      position: relative;
+      margin-left: 12vw; 
+      transform: translateX(-10px);
+    }
+
+    .river-artwork-wrapper svg {
+      height: 76vh;
+      width: auto;
+      max-height: 76vh;
+      overflow: visible;
+      display: block;
+    }
+
+    .svg-interactive-node {
+      transform-box: fill-box;
+      transform-origin: center center;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+
+
+    /* =========================
+       RIGHT SIDE: 3x3 GRID (NO BORDERS)
+    ========================= */
+
+    .design-grid-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 16vw;
+      height: 76vh;
+      width: 76vw;
+      max-width: 1050px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .design-grid-3x3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 5.5vh 6.2vw;
+      height: 56vh;
+      width: 58vw;
+      max-width: 720px;
+      max-height: 560px;
+      margin: auto;
+      transition: opacity 0.4s ease;
+    }
+
+    .grid-square-tile {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      height: 100%;
+      max-width: 135px;
+      max-height: 135px;
+      margin: auto;
+      border: none;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    }
+
+    .grid-square-tile:hover {
+      transform: scale(1.08);
+    }
+
+    .grid-square-tile.dimmed-tile {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    .grid-square-tile.in-flight-tile {
+      opacity: 0 !important;
+    }
+
+    .tile-thumb-img, .tile-thumb-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+
+    /* =========================
+       PHYSICALLY EXPANDING TILE (OPENS TO THE RIGHT SIDE)
+    ========================= */
+
+    .expanding-tile-clone {
+      position: absolute;
+      border: none;
+      border-radius: 4px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      z-index: 30;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        top 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+        left 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+        width 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+        height 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.25s ease;
+    }
+
+    .expanding-tile-clone.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .clone-media-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .clone-media-wrapper img,
+    .clone-media-wrapper video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .carousel-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--glass-bg);
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 40;
+      opacity: 0.85;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .carousel-nav-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      opacity: 1;
+      background: var(--accent-color);
+      color: var(--bg-color);
+    }
+
+    .carousel-prev { left: 8px; }
+    .carousel-next { right: 8px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 40;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-color);
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--accent-color);
+    }
+
+
+    /* =========================
+       TEXT DESCRIPTION PANEL (LOCATED ON THE LEFT SIDE)
+    ========================= */
+
+    .expanded-desc-panel {
+      position: absolute;
+      left: 2vw;
+      top: 50%;
+      transform: translateY(-50%) translateX(-25px);
+      width: 32vw;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease 0.15s, transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+      z-index: 30;
+    }
+
+    .expanded-desc-panel.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .expanded-desc-panel .desc-num {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      opacity: 0.65;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .expanded-desc-panel h2 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .expanded-desc-panel p {
+      font-size: 1rem;
+      line-height: 1.55;
+      opacity: 0.85;
+      margin-bottom: 24px;
+    }
+
+    .project-link-btn {
+      display: inline-block;
+      color: var(--accent-color);
+      text-decoration: underline;
+      font-weight: 600;
+      margin-top: 6px;
+      transition: opacity 0.2s ease;
+    }
+
+    .project-link-btn:hover {
+      opacity: 0.75;
+    }
+
+    .desc-back-btn {
+      align-self: flex-start;
+      background: transparent;
+      border: 1.5px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+
+    .desc-back-btn:hover {
+      background: var(--accent-color);
+      color: var(--bg-color);
+      transform: translateX(-3px);
+    }
+
+
+    /* =========================
+       ZOOM CONTROL (FOR PAINTINGS)
+    ========================= */
+
+    .zoom-control-container {
+      position: fixed;
+      bottom: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      padding: 4px 0;
+      transition: opacity 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .zoom-control-container.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .zoom-control-container .zoom-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      color: var(--accent-color);
+      user-select: none;
+      transition: color 0.4s ease;
+    }
+
+    .zoom-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 120px;
+      height: 3px;
+      background: var(--accent-dim);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.4s ease;
+    }
+
+    .zoom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.4s ease;
+    }
+
+    .zoom-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+
+    /* =========================
+       HIDDEN ELEMENTS
+    ========================= */
+
+    .fade-out {
+      opacity: 0 !important;
+      pointer-events: none;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      :root {
+        --left-margin: 7vw;
+      }
+
+      .theme-toggle-btn {
+        right: 7vw;
+        top: 4.5vh;
+        width: 64px;
+        height: 32px;
+      }
+
+      .toggle-thumb {
+        width: 24px;
+        height: 24px;
+      }
+
+      body.light-mode .toggle-thumb {
+        transform: translateX(29px);
+      }
+
+      .hero-title-container {
+        left: var(--left-margin);
+        top: 5vh;
+      }
+
+      .artist-persistent-name {
+        font-size: 0.75rem;
+      }
+
+      .hero-title-content .eyebrow {
+        font-size: 1.2rem;
+      }
+
+      .hero-title-content h1 {
+        font-size: 3.2rem;
+      }
+
+      .hero-footer {
+        left: var(--left-margin);
+        bottom: 12vh;
+      }
+
+      .contact-block {
+        right: 7vw;
+        bottom: 4.5vh;
+      }
+
+      .info-block .school {
+        font-size: 0.9rem;
+      }
+
+      .info-block .commissions,
+      .contact-item {
+        font-size: 0.85rem;
+      }
+
+      .side-text {
+        font-size: 0.75rem;
+      }
+
+      :root {
+        --item-height: 42vh;
+      }
+
+      .river-artwork-wrapper,
+      .river-artwork-wrapper svg {
+        height: 70vh;
+      }
+
+      .gallery-track {
+        left: var(--left-margin);
+        gap: 10vw;
+      }
+
+      .design-grid-wrapper {
+        margin-left: 30vw;
+        width: 90vw;
+      }
+
+      .design-grid-3x3 {
+        height: 46vh;
+        width: 82vw;
+        gap: 12px;
+      }
+
+      .expanded-desc-panel {
+        width: 85vw;
+        top: 75%;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="viewport-container" id="mainContainer">
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light and dark theme">
+      <div class="theme-icon-box icon-moon-box">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </div>
+
+      <div class="theme-icon-box icon-sun-box">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3.6"></circle>
+          <line x1="12" y1="2.5" x2="12" y2="4.5"></line>
+          <line x1="12" y1="19.5" x2="12" y2="21.5"></line>
+          <line x1="2.5" y1="12" x2="4.5" y2="12"></line>
+          <line x1="19.5" y1="12" x2="21.5" y2="12"></line>
+          <line x1="5.3" y1="5.3" x2="6.7" y2="6.7"></line>
+          <line x1="17.3" y1="17.3" x2="18.7" y2="18.7"></line>
+          <line x1="5.3" y1="18.7" x2="6.7" y2="17.3"></line>
+          <line x1="17.3" y1="6.7" x2="18.7" y2="5.3"></line>
+        </svg>
+      </div>
+
+      <div class="toggle-thumb"></div>
+    </button>
+
+
+    <!-- TITLE -->
+    <header class="hero-title-container" id="heroTitle" title="Click to return home">
+      <span class="artist-persistent-name" id="persistentName">Sea Ronen Goldberg</span>
+      
+      <div class="hero-title-content" id="heroTitleContent">
+        <span class="eyebrow">ORIGINAL</span>
+        <h1>CUSTOM<br>ART</h1>
+      </div>
+    </header>
+
+
+    <!-- SIDE TEXT LEFT (NAVIGATES DIRECTLY TO THE HEART OF PAINTINGS) -->
+    <div class="side-text left-scroll" id="sideTextLeft" title="Click to go to paintings">
+      <span>scroll down for my paintings</span>
+      <span class="side-text-arrow">↑</span>
+    </div>
+
+    <!-- SIDE TEXT RIGHT (NAVIGATES TO DESIGN) -->
+    <div class="side-text right-scroll" id="sideTextRight" title="Click to go to design projects">
+      <span>scroll up for other design projects</span>
+      <span class="side-text-arrow">↑</span>
+    </div>
+
+
+    <!-- GALLERY TRACK -->
+    <main class="gallery-track" id="galleryTrack">
+
+      <!-- Final End Frame / Colophon Card -->
+      <div class="gallery-end-card" id="endCard">
+        <div class="end-card-header">
+          <h4>Custom Inquiries</h4>
+          <p>Open for portrait commissions, wedding keepsakes & collaborations</p>
+        </div>
+
+        <div class="end-card-contacts">
+          <a href="mailto:searonen7@gmail.com">
+            <svg class="contact-icon" viewBox="0 0 24 24">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M22 6l-10 7L2 6"></path>
+            </svg>
+            <span>searonen7@gmail.com</span>
+          </a>
+
+          <a href="tel:+972532450020">
+            <svg class="contact-icon" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span>+972 53 245 0020</span>
+          </a>
+        </div>
+
+        <button class="back-home-btn" onclick="resetToHome()">Back to Home →</button>
+      </div>
+
+      <!-- Paintings Ordered: 21, 17, 30, 14, 25, 24, 22, 1, 19, 4, 13, 12, 8, 11, 5, 15, 3, 18, 29, 2 -->
+      <img src="./paintings/21.jpeg" class="gallery-item" alt="Artwork 21">
+      <img src="./paintings/17.jpeg" class="gallery-item" alt="Artwork 17">
+      <img src="./paintings/30.jpeg" class="gallery-item" alt="Artwork 30">
+      <img src="./paintings/14.jpeg" class="gallery-item" alt="Artwork 14">
+      <img src="./paintings/25.jpeg" class="gallery-item" alt="Artwork 25">
+      <img src="./paintings/24.jpeg" class="gallery-item" alt="Artwork 24">
+      <img src="./paintings/22.jpeg" class="gallery-item" alt="Artwork 22">
+      <img src="./paintings/1.jpeg" class="gallery-item" alt="Artwork 1">
+      <img src="./paintings/19.jpeg" class="gallery-item" alt="Artwork 19">
+      <img src="./paintings/4.jpeg" class="gallery-item" alt="Artwork 4">
+      <img src="./paintings/13.jpeg" class="gallery-item" alt="Artwork 13">
+      <img src="./paintings/12.jpeg" class="gallery-item" alt="Artwork 12">
+      <img src="./paintings/8.jpeg" class="gallery-item" alt="Artwork 8">
+      <img src="./paintings/11.jpeg" class="gallery-item" alt="Artwork 11">
+      <img src="./paintings/5.jpeg" class="gallery-item" alt="Artwork 5">
+      <img src="./paintings/15.jpeg" class="gallery-item" alt="Artwork 15">
+      <img src="./paintings/3.jpeg" class="gallery-item" alt="Artwork 3">
+      <img src="./paintings/18.jpeg" class="gallery-item" alt="Artwork 18">
+      <img src="./paintings/29.jpeg" class="gallery-item" alt="Artwork 29">
+      <img src="./paintings/2.jpeg" class="gallery-item" id="firstPainting" alt="Artwork 2">
+
+      <!-- HOME CENTER (SVG COLLAGE) -->
+      <div class="river-artwork-wrapper" id="homeArtwork"></div>
+
+      <!-- RIGHT SIDE: 3x3 GRID (NO BORDERS) -->
+      <div class="design-grid-wrapper" id="designGridWrapper">
+        
+        <div class="design-grid-3x3" id="designGrid">
+          
+          <!-- Box 1 (Top Left): websb.png -> Lost Items -->
+          <div class="grid-square-tile" data-proj-index="0" onclick="openProjectByIndex(0, this)">
+            <img src="./paintings/websb.png" class="tile-thumb-img" alt="Lost Items">
+          </div>
+
+          <!-- Box 2 (Top Center): pk carousel -> Koresh Building Poster -->
+          <div class="grid-square-tile" data-proj-index="1" onclick="openProjectByIndex(1, this)">
+            <img src="./paintings/pk2.png" class="tile-thumb-img" alt="Koresh Poster">
+          </div>
+
+          <!-- Box 3 (Top Right): s carousel -> Forgotten Messages -->
+          <div class="grid-square-tile" data-proj-index="2" onclick="openProjectByIndex(2, this)">
+            <img src="./paintings/s2.png" class="tile-thumb-img" alt="Forgotten Messages">
+          </div>
+
+          <!-- Box 4 (Middle Left): thelovers.png -> The Lovers -->
+          <div class="grid-square-tile" data-proj-index="3" onclick="openProjectByIndex(3, this)">
+            <img src="./paintings/thelovers.png" class="tile-thumb-img" alt="The Lovers">
+          </div>
+
+          <!-- Box 5 (Middle Center): 10ago.mp4 -> 10 Agorot (starts at second 29 to avoid black screen) -->
+          <div class="grid-square-tile" data-proj-index="4" onclick="openProjectByIndex(4, this)">
+            <video src="./paintings/10ago.mp4#t=29" class="tile-thumb-video" preload="auto" muted playsinline></video>
+          </div>
+
+          <!-- Box 6 (Middle Right): gs carousel -> Two Pyromaniac Neighbors -->
+          <div class="grid-square-tile" data-proj-index="5" onclick="openProjectByIndex(5, this)">
+            <img src="./paintings/gs3.png" class="tile-thumb-img" alt="Two Pyromaniac Neighbors">
+          </div>
+
+          <!-- Box 7 (Bottom Left): cancel.MOV -> Cancel & Delete Behavior -->
+          <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
+            <video src="./paintings/cancel.MOV" class="tile-thumb-video" preload="auto" muted playsinline></video>
+          </div>
+
+          <!-- Box 8 (Bottom Center): cm carousel -> Comic Postcard Series -->
+          <div class="grid-square-tile" data-proj-index="7" onclick="openProjectByIndex(7, this)">
+            <img src="./paintings/cm2.jpg" class="tile-thumb-img" alt="Comic Postcards">
+          </div>
+
+          <!-- Box 9 (Bottom Right): mg carousel -> Define Your Bully -->
+          <div class="grid-square-tile" data-proj-index="8" onclick="openProjectByIndex(8, this)">
+            <img src="./paintings/mg1.PNG" class="tile-thumb-img" alt="Define Your Bully">
+          </div>
+
+        </div>
+
+        <!-- THE PHYSICAL EXPANDING TILE (OPENS TO THE RIGHT SIDE) -->
+        <div class="expanding-tile-clone" id="expandingClone">
+          <div class="clone-media-wrapper" id="cloneMediaWrapper"></div>
+          
+          <button class="carousel-nav-btn carousel-prev" id="prevBtn" onclick="prevSlide(event)">‹</button>
+          <button class="carousel-nav-btn carousel-next" id="nextBtn" onclick="nextSlide(event)">›</button>
+          <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+
+        <!-- SIDE DESCRIPTION TEXT PANEL (OPENS TO THE LEFT SIDE) -->
+        <div class="expanded-desc-panel" id="descPanel">
+          <span class="desc-num" id="descNum">01 / SELECTED WORK</span>
+          <h2 id="descTitle">Project Title</h2>
+          <div id="descBody">
+            <p id="descText">Project description text will appear here.</p>
+          </div>
+          <button class="desc-back-btn" onclick="collapseTile()">← Back to grid</button>
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- SCALE SLIDER -->
+    <div class="zoom-control-container" id="zoomControl">
+      <span class="zoom-label">Scale</span>
+      <input
+        type="range"
+        class="zoom-slider"
+        id="zoomSlider"
+        min="30"
+        max="75"
+        value="48"
+        aria-label="Image Size Scale"
+      >
+    </div>
+
+
+    <!-- FOOTER LEFT -->
+    <footer class="hero-footer" id="heroFooter">
+      <div class="info-block">
+        <p class="school">
+          Bezalel Academy of Arts & Design student
+        </p>
+        <p class="commissions">
+          Open for custom commissions:<br>
+          portraits, wedding illustrations & meaningful keepsakes
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- FOOTER RIGHT (CONTACT WITH ICONS) -->
+    <div class="contact-block" id="contactBlock">
+      <div class="contact-links">
+        <a href="mailto:searonen7@gmail.com" class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M22 6l-10 7L2 6"></path>
+          </svg>
+          <span>searonen7@gmail.com</span>
+        </a>
+
+        <a href="tel:+972532450020" class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span>+972 53 245 0020</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =================================
+       JAVASCRIPT
+  ================================== -->
+
+  <script>
+
+    const track = document.getElementById("galleryTrack");
+    const homeArtwork = document.getElementById("homeArtwork");
+    const firstPainting = document.getElementById("firstPainting");
+    const endCard = document.getElementById("endCard");
+    const designGridWrapper = document.getElementById("designGridWrapper");
+    const sideLeft = document.getElementById("sideTextLeft");
+    const sideRight = document.getElementById("sideTextRight");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroTitleContent = document.getElementById("heroTitleContent");
+    const heroFooter = document.getElementById("heroFooter");
+    const contactBlock = document.getElementById("contactBlock");
+    const zoomControl = document.getElementById("zoomControl");
+    const zoomSlider = document.getElementById("zoomSlider");
+    const themeToggle = document.getElementById("themeToggle");
+
+    const designGrid = document.getElementById("designGrid");
+    const tiles = document.querySelectorAll(".grid-square-tile");
+    const expandingClone = document.getElementById("expandingClone");
+    const cloneMediaWrapper = document.getElementById("cloneMediaWrapper");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const carouselDots = document.getElementById("carouselDots");
+    
+    const descPanel = document.getElementById("descPanel");
+    const descNum = document.getElementById("descNum");
+    const descTitle = document.getElementById("descTitle");
+    const descBody = document.getElementById("descBody");
+
+    let initialOffset = 0;
+    let cachedNodes = [];
+    let ticking = false;
+    let isExpanded = false;
+    let activeTile = null;
+
+    /* =================================
+       PROJECTS DATA SPECIFICATION
+    ================================== */
+
+    const projectsData = [
+      {
+        num: "01",
+        title: "Lost Items",
+        desc: "An introduction to the personality of my room through items I have lost.",
+        link: "https://searonen.github.io/missingitems/",
+        items: ["./paintings/websb.png"]
+      },
+      {
+        num: "02",
+        title: "Koresh Building Poster",
+        desc: "Drafts and final submissions for a poster design assignment created as part of the B.Des in Visual Communication.",
+        items: ["./paintings/pk2.png", "./paintings/pk3.png", "./paintings/pk1.png", "./paintings/pk4.png"]
+      },
+      {
+        num: "03",
+        title: "Forgotten Messages (מסרים שכוחים)",
+        desc: "A collection of stickers found scratched and weathered on the streets, exploring their visual deconstruction and reconstruction.",
+        items: ["./paintings/s2.png", "./paintings/s1.png", "./paintings/s3.png", "./paintings/s4.png", "./paintings/s5.png"]
+      },
+      {
+        num: "04",
+        title: "The Lovers",
+        desc: "An homage to the iconic surrealist masterpiece \"The Lovers\" (Les Amants, 1928) by René Magritte.",
+        items: ["./paintings/thelovers.png"]
+      },
+      {
+        num: "05",
+        title: "10 Agorot",
+        desc: "A reflective retrospective on a transformative personal experience in Jaffa.",
+        items: ["./paintings/10ago.mp4"]
+      },
+      {
+        num: "06",
+        title: "Two Pyromaniac Neighbors",
+        desc: "An interactive game built with Makey Makey. Two neighbors discover their superpowers are real and must protect their houses before their parents return.",
+        items: ["./paintings/gs3.png", "./paintings/gs2.mov", "./paintings/gs1.png"]
+      },
+      {
+        num: "07",
+        title: "Cancel & Delete Behavior",
+        desc: "A Visual Communication academic assignment exploring kinetic character and behavior for cancellation and deletion buttons.",
+        items: ["./paintings/cancel.MOV"]
+      },
+      {
+        num: "08",
+        title: "Comic Postcard Series",
+        desc: "A curated series of narrative comic postcards and illustrated panels.",
+        items: ["./paintings/cm2.jpg", "./paintings/cm1.jpg", "./paintings/cm3.JPG"]
+      },
+      {
+        num: "09",
+        title: "Define Your Bully",
+        desc: "A B.Des Visual Communication interaction design project: an app created to characterize and identify your personal bully.",
+        items: ["./paintings/mg1.PNG", "./paintings/mg2.PNG", "./paintings/mg4.PNG", "./paintings/mg6.PNG"]
+      }
+    ];
+
+    let currentProjectIndex = 0;
+    let currentSlideIndex = 0;
+
+    /* =================================
+       INTERACTIVE HOVER PREVIEWS (GIF / VIDEO IN GRID)
+    ================================== */
+
+    tiles.forEach(tile => {
+      const pIndex = parseInt(tile.getAttribute('data-proj-index'));
+      const proj = projectsData[pIndex];
+      let hoverInterval = null;
+      let hoverStep = 0;
+
+      tile.addEventListener('mouseenter', () => {
+        if (isExpanded) return;
+
+        if (proj.items.length > 1) {
+          hoverInterval = setInterval(() => {
+            hoverStep = (hoverStep + 1) % proj.items.length;
+            const src = proj.items[hoverStep];
+            const isVid = src.endsWith('.mp4') || src.endsWith('.MOV') || src.endsWith('.mov');
+            
+            tile.innerHTML = isVid
+              ? `<video src="${src}" class="tile-thumb-video" autoplay loop muted playsinline></video>`
+              : `<img src="${src}" class="tile-thumb-img" alt="Preview">`;
+          }, 650);
+        } else {
+          const vid = tile.querySelector('video');
+          if (vid) {
+            vid.currentTime = 29;
+            vid.play().catch(() => {});
+          }
+        }
+      });
+
+      tile.addEventListener('mouseleave', () => {
+        if (hoverInterval) clearInterval(hoverInterval);
+        hoverStep = 0;
+        const initialSrc = proj.items[0];
+        const isVid = initialSrc.endsWith('.mp4') || initialSrc.endsWith('.MOV') || initialSrc.endsWith('.mov');
+
+        if (isVid) {
+          tile.innerHTML = `<video src="${initialSrc}#t=29" class="tile-thumb-video" preload="auto" muted playsinline></video>`;
+        } else {
+          tile.innerHTML = `<img src="${initialSrc}" class="tile-thumb-img" alt="Preview">`;
+        }
+      });
+    });
+
+    function openProjectByIndex(index, tileElement) {
+      currentProjectIndex = index;
+      currentSlideIndex = 0;
+      expandTile(tileElement);
+    }
+
+    /* =================================
+       EXPANDED CAROUSEL & MEDIA
+    ================================== */
+
+    function renderSlide() {
+      const proj = projectsData[currentProjectIndex];
+      const currentSrc = proj.items[currentSlideIndex];
+      const isVideo = currentSrc.endsWith('.mp4') || currentSrc.endsWith('.MOV') || currentSrc.endsWith('.mov');
+
+      cloneMediaWrapper.innerHTML = '';
+
+      if (isVideo) {
+        const vid = document.createElement('video');
+        vid.src = currentSrc;
+        vid.autoplay = true;
+        vid.controls = true;
+        vid.muted = false;
+        vid.playsInline = true;
+        cloneMediaWrapper.appendChild(vid);
+      } else {
+        const img = document.createElement('img');
+        img.src = currentSrc;
+        img.alt = proj.title;
+        cloneMediaWrapper.appendChild(img);
+      }
+
+      if (proj.items.length > 1) {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+        carouselDots.style.display = 'flex';
+        carouselDots.innerHTML = '';
+        proj.items.forEach((_, i) => {
+          const dot = document.createElement('div');
+          dot.className = `carousel-dot ${i === currentSlideIndex ? 'active' : ''}`;
+          carouselDots.appendChild(dot);
+        });
+      } else {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        carouselDots.style.display = 'none';
+      }
+    }
+
+    function prevSlide(e) {
+      if (e) e.stopPropagation();
+      const proj = projectsData[currentProjectIndex];
+      currentSlideIndex = (currentSlideIndex - 1 + proj.items.length) % proj.items.length;
+      renderSlide();
+    }
+
+    function nextSlide(e) {
+      if (e) e.stopPropagation();
+      const proj = projectsData[currentProjectIndex];
+      currentSlideIndex = (currentSlideIndex + 1) % proj.items.length;
+      renderSlide();
+    }
+
+    /* =================================
+       FLIP EXPANSION (EXPANDS TO THE RIGHT)
+    ================================== */
+
+    function expandTile(tileElement) {
+      if (isExpanded) return;
+      isExpanded = true;
+      activeTile = tileElement;
+
+      const proj = projectsData[currentProjectIndex];
+
+      const wrapperRect = designGridWrapper.getBoundingClientRect();
+      const tileRect = tileElement.getBoundingClientRect();
+
+      const startLeft = tileRect.left - wrapperRect.left;
+      const startTop = tileRect.top - wrapperRect.top;
+      const startWidth = tileRect.width;
+      const startHeight = tileRect.height;
+
+      expandingClone.style.transition = "none";
+      expandingClone.style.left = `${startLeft}px`;
+      expandingClone.style.top = `${startTop}px`;
+      expandingClone.style.width = `${startWidth}px`;
+      expandingClone.style.height = `${startHeight}px`;
+      expandingClone.classList.add("active");
+
+      renderSlide();
+
+      tileElement.classList.add("in-flight-tile");
+      tiles.forEach(t => {
+        if (t !== tileElement) t.classList.add("dimmed-tile");
+      });
+
+      const targetHeight = Math.min(window.innerHeight * 0.54, 480);
+      const targetWidth = targetHeight;
+      const targetTop = (wrapperRect.height - targetHeight) / 2;
+      const targetLeft = wrapperRect.width - targetWidth - 20;
+
+      descNum.textContent = proj.num + " / SELECTED WORK";
+      descTitle.textContent = proj.title;
+      
+      let bodyHtml = `<p>${proj.desc}</p>`;
+      if (proj.link) {
+        bodyHtml += `<a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="project-link-btn" onclick="event.stopPropagation()">Visit Project Live ↗</a>`;
+      }
+      descBody.innerHTML = bodyHtml;
+
+      requestAnimationFrame(() => {
+        expandingClone.style.transition = "top 0.55s cubic-bezier(0.25, 1, 0.5, 1), left 0.55s cubic-bezier(0.25, 1, 0.5, 1), width 0.55s cubic-bezier(0.25, 1, 0.5, 1), height 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease";
+        expandingClone.style.left = `${targetLeft}px`;
+        expandingClone.style.top = `${targetTop}px`;
+        expandingClone.style.width = `${targetWidth}px`;
+        expandingClone.style.height = `${targetHeight}px`;
+
+        descPanel.classList.add("active");
+      });
+    }
+
+    function collapseTile() {
+      if (!isExpanded || !activeTile) return;
+
+      descPanel.classList.remove("active");
+
+      const vid = cloneMediaWrapper.querySelector('video');
+      if (vid) vid.pause();
+
+      const wrapperRect = designGridWrapper.getBoundingClientRect();
+      const tileRect = activeTile.getBoundingClientRect();
+
+      const originLeft = tileRect.left - wrapperRect.left;
+      const originTop = tileRect.top - wrapperRect.top;
+      const originWidth = tileRect.width;
+      const originHeight = tileRect.height;
+
+      expandingClone.style.left = `${originLeft}px`;
+      expandingClone.style.top = `${originTop}px`;
+      expandingClone.style.width = `${originWidth}px`;
+      expandingClone.style.height = `${originHeight}px`;
+
+      setTimeout(() => {
+        expandingClone.classList.remove("active");
+        if (activeTile) activeTile.classList.remove("in-flight-tile");
+        tiles.forEach(t => t.classList.remove("dimmed-tile"));
+        activeTile = null;
+        isExpanded = false;
+      }, 520);
+    }
+
+    /* =================================
+       INSTANT VIRTUAL DUAL-SCROLL ENGINE
+    ================================== */
+
+    let currentVirtualPos = 0;
+    let targetVirtualPos = 0;
+    let maxLeftShift = 0;
+    let maxRightShift = 0;
+    let isAnimating = false;
+
+    function initVirtualScrollLimits() {
+      if (!homeArtwork || !designGridWrapper || !designGrid) return;
+      initialOffset = homeArtwork.offsetLeft;
+      
+      maxLeftShift = initialOffset; 
+      
+      const leftMarginPx = window.innerWidth * 0.055;
+      const gridCenterInTrack = designGridWrapper.offsetLeft + designGrid.offsetLeft + (designGrid.offsetWidth / 2);
+      maxRightShift = gridCenterInTrack - initialOffset + leftMarginPx - (window.innerWidth / 2);
+
+      renderTrack();
+    }
+
+    window.addEventListener("wheel", function(e) {
+      if (isExpanded) return;
+
+      targetVirtualPos += e.deltaY * 1.5;
+      targetVirtualPos = Math.max(-maxRightShift, Math.min(maxLeftShift, targetVirtualPos));
+
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
+    }, { passive: true });
+
+    function smoothScrollLoop() {
+      currentVirtualPos += (targetVirtualPos - currentVirtualPos) * 0.09;
+      renderTrack();
+
+      if (Math.abs(targetVirtualPos - currentVirtualPos) > 0.2) {
+        requestAnimationFrame(smoothScrollLoop);
+      } else {
+        currentVirtualPos = targetVirtualPos;
+        renderTrack();
+        isAnimating = false;
+      }
+    }
+
+    function renderTrack() {
+      const shift = -initialOffset + currentVirtualPos;
+      track.style.transform = `translateY(-50%) translateX(${shift}px)`;
+
+      const distanceFromHome = Math.abs(currentVirtualPos);
+
+      if (distanceFromHome > 15) {
+        sideLeft.classList.add("fade-out");
+        sideRight.classList.add("fade-out");
+        heroTitleContent.classList.add("fade-out");
+        heroFooter.classList.add("fade-out");
+        contactBlock.classList.add("fade-out");
+
+        if (currentVirtualPos > 40) {
+          zoomControl.classList.add("visible");
+        } else {
+          zoomControl.classList.remove("visible");
+        }
+      } else {
+        sideLeft.classList.remove("fade-out");
+        sideRight.classList.remove("fade-out");
+        heroTitleContent.classList.remove("fade-out");
+        heroFooter.classList.remove("fade-out");
+        contactBlock.classList.remove("fade-out");
+        zoomControl.classList.remove("visible");
+      }
+    }
+
+    function resetToHome() {
+      collapseTile();
+      targetVirtualPos = 0;
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
+    }
+
+    sideLeft.addEventListener("click", function() {
+      if (!firstPainting) return;
+      const leftMarginPx = window.innerWidth * 0.055;
+      targetVirtualPos = (initialOffset - (firstPainting.offsetLeft + firstPainting.offsetWidth)) + (window.innerWidth - leftMarginPx);
+      targetVirtualPos = Math.min(maxLeftShift, Math.max(0, targetVirtualPos));
+      
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
+    });
+
+    sideRight.addEventListener("click", function() {
+      targetVirtualPos = -maxRightShift;
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
+    });
+
+    /* =================================
+       FETCH & SETUP SVG
+    ================================== */
+
+    async function loadInlineSVG() {
+      try {
+        const response = await fetch('./seasweb.svg');
+        if (!response.ok) throw new Error("Could not load SVG");
+        const svgText = await response.text();
+        homeArtwork.innerHTML = svgText;
+        
+        setupSVGNodes();
+      } catch (err) {
+        console.warn("SVG loading fallback:", err);
+        homeArtwork.innerHTML = `<img src="./seasweb.svg" class="river-artwork" alt="Collage">`;
+      } finally {
+        initVirtualScrollLimits();
+        track.classList.add("ready");
+      }
+    }
+
+    function setupSVGNodes() {
+      const svg = homeArtwork.querySelector("svg");
+      if (!svg) return;
+
+      const candidates = svg.querySelectorAll("svg > g, svg > g > g, svg > image, svg > path:not([clip-path])");
+      cachedNodes = [];
+
+      candidates.forEach(el => {
+        if (el.closest("clipPath") || el.closest("mask") || el.tagName === "clipPath") return;
+        
+        el.classList.add("svg-interactive-node");
+        cachedNodes.push(el);
+      });
+
+      initGentleProximity(svg);
+    }
+
+    function initGentleProximity(svg) {
+      const RADIUS = 110;
+
+      homeArtwork.addEventListener("mousemove", function(e) {
+        if (Math.abs(currentVirtualPos) > 40) return;
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        if (!ticking) {
+          requestAnimationFrame(function() {
+            cachedNodes.forEach(el => {
+              const rect = el.getBoundingClientRect();
+              const cx = rect.left + rect.width / 2;
+              const cy = rect.top + rect.height / 2;
+
+              const dx = mouseX - cx;
+              const dy = mouseY - cy;
+              const dist = Math.hypot(dx, dy);
+
+              if (dist < RADIUS) {
+                const progress = (1 - dist / RADIUS);
+                const smoothForce = Math.pow(progress, 1.4);
+
+                const scale = 1 + (smoothForce * 0.32);
+                const moveY = -smoothForce * 12;
+                const moveX = -(dx / dist) * smoothForce * 8;
+
+                el.style.transform = `translate(${moveX.toFixed(2)}px, ${moveY.toFixed(2)}px) scale(${scale.toFixed(3)})`;
+              } else {
+                el.style.transform = "translate(0px, 0px) scale(1)";
+              }
+            });
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      homeArtwork.addEventListener("mouseleave", function() {
+        cachedNodes.forEach(el => {
+          el.style.transform = "translate(0px, 0px) scale(1)";
+        });
+      });
+    }
+
+    /* =================================
+       THEME TOGGLE
+    ================================== */
+
+    themeToggle.addEventListener("click", function(e) {
+      e.stopPropagation();
+      document.body.classList.toggle("light-mode");
+    });
+
+    zoomSlider.addEventListener("input", function(e) {
+      const newHeight = e.target.value;
+      document.documentElement.style.setProperty("--item-height", `${newHeight}vh`);
+      initVirtualScrollLimits();
+    });
+
+    heroTitle.addEventListener("click", resetToHome);
+
+    window.addEventListener("click", function(event) {
+      if (
+        isExpanded &&
+        !event.target.closest(".grid-square-tile") &&
+        !event.target.closest(".expanding-tile-clone") &&
+        !event.target.closest(".expanded-desc-panel")
+      ) {
+        collapseTile();
+        return;
+      }
+
+      if (
+        Math.abs(currentVirtualPos) > 25 &&
+        !event.target.closest(".hero-title-container") &&
+        !event.target.closest("#zoomControl") &&
+        !event.target.closest("#themeToggle") &&
+        !event.target.closest("#contactBlock") &&
+        !event.target.closest("#endCard") &&
+        !event.target.closest(".grid-square-tile") &&
+        !event.target.closest(".expanding-tile-clone") &&
+        !event.target.closest(".expanded-desc-panel") &&
+        !event.target.closest(".side-text")
+      ) {
+        resetToHome();
+      }
+    });
+
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        collapseTile();
+      } else if (isExpanded) {
+        if (e.key === "ArrowLeft") prevSlide();
+        if (e.key === "ArrowRight") nextSlide();
+      }
+    });
+
+    window.addEventListener("load", function() {
+      loadInlineSVG();
+    });
+
+    window.addEventListener("resize", function() {
+      initVirtualScrollLimits();
+    });
+
+  </script>
+
+</body>
+</html>
