@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <title>Sea Ronen Goldberg | Original Custom Art & Design</title>
 
@@ -18,7 +18,8 @@
       --accent-dim: rgba(255, 110, 236, 0.25);
       --glass-bg: rgba(14, 23, 96, 0.6);
       --item-height: 48vh;
-      --left-margin: 5.5vw;
+      --left-margin: 6.8vw;
+      --right-margin: 6.8vw;
     }
 
     body.light-mode {
@@ -28,15 +29,31 @@
       --glass-bg: rgba(255, 255, 255, 0.75);
     }
 
+    body.light-mode,
+    body.light-mode * {
+      box-shadow: none !important;
+      text-shadow: none !important;
+      filter: none !important;
+      -webkit-box-shadow: none !important;
+      -webkit-filter: none !important;
+    }
+
 
     /* =========================
-       RESET & BASE
+       RESET & BASE (SWIPE-BACK PREVENTION)
     ========================= */
+
+    html, body {
+      overscroll-behavior-x: none !important;
+      overscroll-behavior-y: none !important;
+      overscroll-behavior: none !important;
+    }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -57,6 +74,7 @@
       width: 100vw;
       position: relative;
       cursor: default;
+      touch-action: none;
 
       transition:
         background-color 0.4s ease,
@@ -87,7 +105,7 @@
     .theme-toggle-btn {
       position: fixed;
       top: 5.5vh;
-      right: 5.5vw;
+      right: var(--right-margin);
       z-index: 50;
       
       width: 72px;
@@ -191,75 +209,192 @@
     }
 
     .hero-title-content {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 4px;
       transition:
         opacity 0.4s ease,
         transform 0.4s ease,
         color 0.4s ease;
     }
 
-    .hero-title-content .eyebrow {
+    .hero-title-content .title-line {
       display: block;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.1rem;
-    }
-
-    .hero-title-content h1 {
-      font-size: 5rem;
       font-weight: 900;
       line-height: 0.9;
       letter-spacing: 0;
     }
 
-
-    /* =========================
-       SIDE TEXTS (CLICKABLE)
-    ========================= */
-
-    .side-text {
-      position: absolute;
-      top: 50%;
-      z-index: 30;
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      opacity: 0.85;
-      white-space: nowrap;
-      writing-mode: vertical-rl;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      user-select: none;
-      transition:
-        opacity 0.35s ease,
-        transform 0.35s ease,
-        color 0.4s ease;
+    .hero-title-content .line-original {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
-    .side-text:hover {
+    .hero-title-content .line-custom,
+    .hero-title-content .line-art {
+      font-size: 3.8rem;
+    }
+
+
+    /* =========================================
+       SIDE NAV CHEVRONS (HOME VIEW)
+    ========================================= */
+
+    .side-nav-anchor {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      padding: 16px 8px;
+      transition: opacity 0.4s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s ease;
+    }
+
+    .side-nav-left {
+      left: 18px;
+      flex-direction: row;
+      opacity: 0.7;
+    }
+
+    .side-nav-left:hover {
       opacity: 1;
     }
 
-    .side-text-arrow {
-      font-size: 1rem;
-      line-height: 1;
+    .side-nav-right {
+      right: 18px;
+      flex-direction: row-reverse;
+      opacity: 0.95;
     }
 
-    .left-scroll {
-      left: 16px;
-      transform: translateY(-50%) rotate(180deg);
+    .side-nav-right .side-nav-label {
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      opacity: 0.95;
     }
 
-    .right-scroll {
-      right: 16px;
-      transform: translateY(-50%);
+    .side-nav-chevron {
+      width: 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .side-nav-chevron svg {
+      width: 22px;
+      height: 64px;
+      stroke: var(--accent-color);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: stroke 0.4s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .side-nav-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      opacity: 0.65;
+      white-space: nowrap;
+      transition: opacity 0.3s ease, letter-spacing 0.3s ease;
+    }
+
+    .side-nav-left .side-nav-label {
+      transform: rotate(180deg);
+    }
+
+    .side-nav-anchor:hover .side-nav-label {
+      opacity: 1;
+      letter-spacing: 0.24em;
+    }
+
+    .side-nav-left:hover .side-nav-chevron svg {
+      transform: translateX(-5px) scale(1.04);
+    }
+
+    .side-nav-right:hover .side-nav-chevron svg {
+      transform: translateX(5px) scale(1.04);
+    }
+
+    @keyframes pulseHintRight {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(4px);
+      }
+    }
+
+    .side-nav-right .side-nav-chevron svg {
+      animation: pulseHintRight 2.6s ease-in-out infinite;
+    }
+
+    .side-nav-right:hover .side-nav-chevron svg {
+      animation: none;
+    }
+
+
+    /* =========================================
+       FLOATING CIRCULAR RETURN BUTTONS (EDGES)
+    ========================================= */
+
+    .floating-home-btn {
+      position: fixed;
+      bottom: 6vh;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1.5px solid var(--accent-color);
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.3rem;
+      backdrop-filter: blur(10px);
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.2s ease, background 0.2s ease;
+    }
+
+    .floating-home-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .floating-home-btn:hover {
+      transform: scale(1.08);
+      background: var(--accent-color);
+      color: var(--bg-color);
+    }
+
+    .floating-home-btn:active {
+      transform: scale(0.94);
+    }
+
+    .floating-home-right {
+      right: var(--right-margin);
+    }
+
+    .floating-home-left {
+      left: var(--left-margin);
     }
 
 
     /* =========================
-       FOOTER LEFT
+       FOOTER LEFT (DESKTOP)
     ========================= */
 
     .hero-footer {
@@ -289,13 +424,13 @@
 
 
     /* =========================
-       FOOTER RIGHT (CONTACT WITH ICONS)
+       FOOTER RIGHT (DESKTOP)
     ========================= */
 
-    .contact-block {
+    .desktop-contact-block {
       position: absolute;
       bottom: 6vh;
-      right: 5.5vw;
+      right: var(--right-margin);
       z-index: 20;
       text-align: right;
       transition:
@@ -304,7 +439,7 @@
         color 0.4s ease;
     }
 
-    .contact-block .contact-links {
+    .desktop-contact-block .contact-links {
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
@@ -369,23 +504,24 @@
     }
 
 
-    /* =========================
-       END FRAME / COLOPHON CARD
-    ========================= */
+    /* =========================================
+       END FRAME / COLOPHON CARD (PERFECTED & AIRY)
+    ========================================= */
 
     .gallery-end-card {
       height: var(--item-height);
-      width: calc(var(--item-height) * 0.75);
-      min-width: 260px;
-      max-height: 75vh;
+      width: calc(var(--item-height) * 0.72);
+      min-width: 250px;
+      max-height: 62vh;
       flex-shrink: 0;
       border: 1.5px solid var(--accent-color);
-      border-radius: 4px;
+      border-radius: 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 32px 24px;
+      justify-content: center;
+      gap: clamp(14px, 3.5vh, 28px);
+      padding: clamp(20px, 3vh, 32px) clamp(16px, 2.5vw, 24px);
       text-align: center;
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
@@ -397,34 +533,45 @@
       transform: scale(1.02);
     }
 
+    .end-card-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(8px, 1.4vh, 12px);
+      width: 100%;
+    }
+
     .end-card-header h4 {
-      font-size: 1.1rem;
+      font-size: clamp(0.95rem, 1.8vh, 1.15rem);
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      line-height: 1.2;
     }
 
     .end-card-header p {
-      font-size: 0.85rem;
+      font-size: clamp(0.78rem, 1.4vh, 0.88rem);
       opacity: 0.85;
-      line-height: 1.4;
+      line-height: 1.55;
+      max-width: 90%;
     }
 
     .end-card-contacts {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      align-items: center;
+      gap: clamp(8px, 1.6vh, 12px);
       width: 100%;
+      margin: clamp(4px, 1vh, 8px) 0;
     }
 
     .end-card-contacts a {
       color: var(--accent-color);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: clamp(0.82rem, 1.5vh, 0.92rem);
       font-weight: 500;
       opacity: 0.9;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
@@ -438,16 +585,17 @@
 
     .back-home-btn {
       background: transparent;
-      border: 1px solid var(--accent-color);
+      border: 1.2px solid var(--accent-color);
       color: var(--accent-color);
-      padding: 8px 16px;
+      padding: clamp(6px, 1vh, 8px) clamp(14px, 1.8vw, 18px);
       border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-size: clamp(0.72rem, 1.3vh, 0.8rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       cursor: pointer;
       transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      margin-top: clamp(2px, 0.8vh, 6px);
     }
 
     .back-home-btn:hover {
@@ -458,14 +606,19 @@
 
 
     /* =========================
-       PAINTINGS
+       PAINTINGS (WITH GAP BUFFER)
     ========================= */
+
+    .first-painting-node {
+      margin-left: 22vw;
+    }
 
     .gallery-item {
       display: block;
       height: var(--item-height);
       width: auto;
-      max-height: 75vh;
+      max-height: 62vh;
+      max-width: 85vw;
       object-fit: contain;
       flex-shrink: 0;
       border-radius: 4px;
@@ -479,7 +632,7 @@
 
 
     /* =========================
-       HOME SVG WRAPPER
+       HOME CENTER WRAPPER (RAISED 15PX)
     ========================= */
 
     .river-artwork-wrapper {
@@ -491,10 +644,18 @@
       flex-shrink: 0;
       position: relative;
       margin-left: 12vw; 
-      transform: translateX(-10px);
+      transform: translate(-35px, -25px);
     }
 
-    .river-artwork-wrapper svg {
+    .desktop-svg-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: auto;
+    }
+
+    .desktop-svg-container svg {
       height: 76vh;
       width: auto;
       max-height: 76vh;
@@ -509,16 +670,20 @@
       will-change: transform;
     }
 
+    .mobile-home-img {
+      display: none;
+    }
+
 
     /* =========================
-       RIGHT SIDE: 3x3 GRID (NO BORDERS)
+       LEFT SIDE: 3x3 GRID (EXTRA DESIGN PROJECTS)
     ========================= */
 
     .design-grid-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: 16vw;
+      margin-right: 18vw;
       height: 76vh;
       width: 76vw;
       max-width: 1050px;
@@ -536,7 +701,7 @@
       max-width: 720px;
       max-height: 560px;
       margin: auto;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.35s ease;
     }
 
     .grid-square-tile {
@@ -558,7 +723,7 @@
       user-select: none;
       overflow: hidden;
       position: relative;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
     }
 
     .grid-square-tile:hover {
@@ -583,30 +748,30 @@
     }
 
 
-    /* =========================
-       PHYSICALLY EXPANDING TILE (OPENS TO THE RIGHT SIDE)
-    ========================= */
+    /* =========================================
+       EXPANDING TILE & MEDIA (DESKTOP & MOBILE)
+    ========================================= */
 
     .expanding-tile-clone {
       position: absolute;
       border: none;
       border-radius: 4px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
+      background: transparent;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      padding: 0;
       z-index: 30;
-      overflow: hidden;
+      overflow: visible;
       opacity: 0;
       pointer-events: none;
       transition:
-        top 0.55s cubic-bezier(0.25, 1, 0.5, 1),
-        left 0.55s cubic-bezier(0.25, 1, 0.5, 1),
-        width 0.55s cubic-bezier(0.25, 1, 0.5, 1),
-        height 0.55s cubic-bezier(0.25, 1, 0.5, 1),
-        opacity 0.25s ease;
+        top 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+        left 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+        width 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+        height 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.2s ease;
     }
 
     .expanding-tile-clone.active {
@@ -630,6 +795,18 @@
       object-fit: contain;
       display: block;
       border-radius: 4px;
+      background: transparent;
+    }
+
+    .clone-media-wrapper img.media-scaled-down {
+      max-width: 82% !important;
+      max-height: 82% !important;
+    }
+
+    .clone-media-wrapper video.video-clean-frame {
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
     }
 
     .carousel-nav-btn {
@@ -639,17 +816,17 @@
       background: var(--glass-bg);
       border: 1px solid var(--accent-color);
       color: var(--accent-color);
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 40;
-      opacity: 0.85;
-      font-size: 1.1rem;
-      transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+      opacity: 0.9;
+      font-size: 1.2rem;
+      transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease, left 0.2s ease, right 0.2s ease;
       backdrop-filter: blur(8px);
     }
 
@@ -660,24 +837,33 @@
       color: var(--bg-color);
     }
 
-    .carousel-prev { left: 8px; }
-    .carousel-next { right: 8px; }
+    .carousel-prev { left: -26px; }
+    .carousel-next { right: -26px; }
+
+    .expanding-tile-clone.project-tight-arrows .carousel-prev { left: 8px !important; }
+    .expanding-tile-clone.project-tight-arrows .carousel-next { right: 8px !important; }
+
+    .expanding-tile-clone.project-stickers-arrows .carousel-prev { left: -32px !important; }
+    .expanding-tile-clone.project-stickers-arrows .carousel-next { right: -32px !important; }
 
     .carousel-dots {
       position: absolute;
-      bottom: 8px;
+      bottom: -24px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 6px;
+      gap: 7px;
       z-index: 40;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: var(--glass-bg);
     }
 
     .carousel-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      border: 1px solid var(--accent-color);
+      border: 1.2px solid var(--accent-color);
       background: transparent;
       transition: background 0.2s ease;
     }
@@ -688,7 +874,7 @@
 
 
     /* =========================
-       TEXT DESCRIPTION PANEL (LOCATED ON THE LEFT SIDE)
+       TEXT DESCRIPTION PANEL (DESKTOP)
     ========================= */
 
     .expanded-desc-panel {
@@ -703,7 +889,7 @@
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.45s ease 0.15s, transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+      transition: opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
       z-index: 30;
     }
 
@@ -734,7 +920,7 @@
       font-size: 1rem;
       line-height: 1.55;
       opacity: 0.85;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
 
     .project-link-btn {
@@ -742,7 +928,8 @@
       color: var(--accent-color);
       text-decoration: underline;
       font-weight: 600;
-      margin-top: 6px;
+      margin-top: 14px;
+      margin-bottom: 20px;
       transition: opacity 0.2s ease;
     }
 
@@ -775,13 +962,13 @@
     }
 
 
-    /* =========================
-       ZOOM CONTROL (FOR PAINTINGS)
-    ========================= */
+    /* =========================================
+       ZOOM / SCALE CONTROL (DESKTOP & TABLET ONLY)
+    ========================================= */
 
     .zoom-control-container {
       position: fixed;
-      bottom: 5vh;
+      bottom: 6.8vh;
       left: 50%;
       transform: translateX(-50%);
       z-index: 40;
@@ -833,13 +1020,9 @@
       transition: transform 0.15s ease, background-color 0.4s ease;
     }
 
-    .zoom-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-    }
-
 
     /* =========================
-       HIDDEN ELEMENTS
+       FADE OUT CLASS
     ========================= */
 
     .fade-out {
@@ -848,20 +1031,30 @@
     }
 
 
-    /* =========================
-       MOBILE
-    ========================= */
+    /* =========================================================
+       MOBILE RESPONSIVE OVERRIDES
+    ========================================================= */
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
 
       :root {
-        --left-margin: 7vw;
+        --left-margin: 6vw;
+        --right-margin: 6vw;
+        --item-height: 64vh; /* גודל מרווח ונוכח לציורים במובייל */
+      }
+
+      .zoom-control-container {
+        display: none !important;
+      }
+
+      .first-painting-node {
+        margin-left: 26vw;
       }
 
       .theme-toggle-btn {
-        right: 7vw;
-        top: 4.5vh;
-        width: 64px;
+        right: var(--right-margin);
+        top: 6.2vh;
+        width: 60px;
         height: 32px;
       }
 
@@ -871,79 +1064,277 @@
       }
 
       body.light-mode .toggle-thumb {
-        transform: translateX(29px);
+        transform: translateX(27px);
       }
 
       .hero-title-container {
         left: var(--left-margin);
-        top: 5vh;
+        top: 6.2vh;
       }
 
       .artist-persistent-name {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
+        margin-bottom: 0.15rem;
       }
 
-      .hero-title-content .eyebrow {
-        font-size: 1.2rem;
+      .hero-title-content {
+        margin-top: 3px;
+        row-gap: 5px;
       }
 
-      .hero-title-content h1 {
-        font-size: 3.2rem;
+      .hero-title-content .line-original {
+        font-size: 1.45rem;
+        letter-spacing: 0.02em;
+        line-height: 0.92;
+      }
+
+      .hero-title-content .line-custom,
+      .hero-title-content .line-art {
+        font-size: 2.85rem;
+        line-height: 0.92;
+      }
+
+      .side-nav-left {
+        left: 4px;
+        padding: 6px 2px;
+        gap: 6px;
+      }
+
+      .side-nav-right {
+        right: 4px;
+        padding: 6px 2px;
+        gap: 6px;
+      }
+
+      .side-nav-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+      }
+
+      .side-nav-chevron svg {
+        height: 38px;
+        width: 12px;
+        stroke-width: 1.4;
+      }
+
+      .desktop-svg-container {
+        display: none !important;
+      }
+
+      .river-artwork-wrapper {
+        height: 48vh;
+        width: 88vw;
+        max-width: 88vw;
+        margin: 0 auto;
+        transform: translate(0, 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-home-img {
+        display: block !important;
+        height: 46vh;
+        max-height: 46vh;
+        width: 86vw;
+        max-width: 86vw;
+        object-fit: contain;
+        transform: none !important;
+        pointer-events: none;
       }
 
       .hero-footer {
         left: var(--left-margin);
-        bottom: 12vh;
+        right: var(--right-margin);
+        bottom: 5.6vh;
+        width: calc(100vw - (var(--left-margin) * 2));
       }
 
-      .contact-block {
-        right: 7vw;
-        bottom: 4.5vh;
+      .info-block {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
       }
 
       .info-block .school {
-        font-size: 0.9rem;
+        font-size: 0.92rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        line-height: 1.35;
       }
 
-      .info-block .commissions,
+      .info-block .commissions {
+        display: block !important;
+        font-size: 0.84rem;
+        line-height: 1.45;
+        opacity: 0.92;
+      }
+
+      .mobile-only-contact {
+        display: block !important;
+        position: static !important;
+        text-align: left !important;
+        margin-top: 14px;
+        border-top: 1px solid var(--accent-dim);
+        padding-top: 12px;
+        width: 100%;
+      }
+
+      .mobile-only-contact .contact-links {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+      }
+
+      .mobile-only-contact .contact-item-mail {
+        justify-content: flex-start !important;
+      }
+
+      .mobile-only-contact .contact-item-phone {
+        justify-content: flex-end !important;
+        text-align: right !important;
+      }
+
       .contact-item {
-        font-size: 0.85rem;
+        font-size: 0.76rem !important;
       }
 
-      .side-text {
-        font-size: 0.75rem;
-      }
-
-      :root {
-        --item-height: 42vh;
-      }
-
-      .river-artwork-wrapper,
-      .river-artwork-wrapper svg {
-        height: 70vh;
+      .desktop-contact-block {
+        display: none !important;
       }
 
       .gallery-track {
         left: var(--left-margin);
-        gap: 10vw;
+        gap: 8vw;
+      }
+
+      /* תמונות הציורים במובייל */
+      .gallery-item {
+        height: 64vh !important;
+        max-height: 64vh !important;
+        max-width: 88vw !important;
+      }
+
+      .gallery-end-card {
+        height: 64vh !important;
+        max-height: 64vh !important;
+        width: 82vw !important;
       }
 
       .design-grid-wrapper {
-        margin-left: 30vw;
-        width: 90vw;
+        margin-right: 10vw;
+        width: 88vw;
+        height: 72vh;
       }
 
       .design-grid-3x3 {
         height: 46vh;
-        width: 82vw;
-        gap: 12px;
+        width: 84vw;
+        gap: 14px;
+      }
+
+      /* פרויקט פתוח במובייל */
+      .expanding-tile-clone.active {
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 86vw !important;
+        height: auto !important;
+        max-height: 82vh;
+        padding: 0;
+        justify-content: center;
+        gap: 14px;
+      }
+
+      .clone-media-wrapper {
+        height: 38vh;
+        max-height: 300px;
+        width: 100%;
+        margin: 0;
+      }
+
+      .carousel-prev { left: -14px !important; width: 32px; height: 32px; font-size: 1rem; }
+      .carousel-next { right: -14px !important; width: 32px; height: 32px; font-size: 1rem; }
+
+      .carousel-dots {
+        position: static;
+        transform: none;
+        margin: 4px auto 0 auto;
+        padding: 2px 6px;
       }
 
       .expanded-desc-panel {
-        width: 85vw;
-        top: 75%;
+        display: none !important;
       }
 
+      .mobile-card-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        gap: 2px;
+      }
+
+      .mobile-card-header .m-num {
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        opacity: 0.7;
+        text-transform: uppercase;
+      }
+
+      .mobile-card-header .m-title {
+        font-size: 1.25rem;
+        font-weight: 900;
+        line-height: 1.15;
+      }
+
+      .mobile-card-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        gap: 6px;
+      }
+
+      .mobile-card-footer p {
+        font-size: 0.85rem;
+        line-height: 1.35;
+        opacity: 0.9;
+        max-width: 90%;
+      }
+
+      .mobile-card-footer .m-link {
+        font-size: 0.82rem;
+        color: var(--accent-color);
+        font-weight: 700;
+        text-decoration: underline;
+        margin-top: 4px;
+      }
+
+      .floating-home-btn {
+        bottom: 5.6vh !important;
+      }
+
+      .floating-home-left {
+        left: var(--left-margin) !important;
+      }
+
+      .floating-home-right {
+        right: var(--right-margin) !important;
+      }
+
+    }
+
+    @media (min-width: 769px) {
+      .mobile-only-contact {
+        display: none !important;
+      }
     }
 
   </style>
@@ -985,29 +1376,142 @@
       <span class="artist-persistent-name" id="persistentName">Sea Ronen Goldberg</span>
       
       <div class="hero-title-content" id="heroTitleContent">
-        <span class="eyebrow">ORIGINAL</span>
-        <h1>CUSTOM<br>ART</h1>
+        <span class="title-line line-original">ORIGINAL</span>
+        <span class="title-line line-custom">CUSTOM</span>
+        <span class="title-line line-art">ART</span>
       </div>
     </header>
 
 
-    <!-- SIDE TEXT LEFT (NAVIGATES DIRECTLY TO THE HEART OF PAINTINGS) -->
-    <div class="side-text left-scroll" id="sideTextLeft" title="Click to go to paintings">
-      <span>scroll down for my paintings</span>
-      <span class="side-text-arrow">↑</span>
+    <!-- SIDE NAV CHEVRONS -->
+    <div class="side-nav-anchor side-nav-left" id="sideNavLeft" title="View Extra Design Projects">
+      <div class="side-nav-chevron">
+        <svg viewBox="0 0 16 48">
+          <polyline points="13,2 3,24 13,46"></polyline>
+        </svg>
+      </div>
+      <span class="side-nav-label">Extra Design Projects</span>
     </div>
 
-    <!-- SIDE TEXT RIGHT (NAVIGATES TO DESIGN) -->
-    <div class="side-text right-scroll" id="sideTextRight" title="Click to go to design projects">
-      <span>scroll up for other design projects</span>
-      <span class="side-text-arrow">↑</span>
+    <div class="side-nav-anchor side-nav-right" id="sideNavRight" title="View Paintings">
+      <div class="side-nav-chevron">
+        <svg viewBox="0 0 16 48">
+          <polyline points="3,2 13,24 3,46"></polyline>
+        </svg>
+      </div>
+      <span class="side-nav-label">Paintings</span>
     </div>
+
+    <!-- FLOATING CIRCULAR RETURN BUTTONS (EDGES) -->
+    <button class="floating-home-btn floating-home-left" id="returnFromPaintings" onclick="resetToHome()" aria-label="Return to Home">
+      ←
+    </button>
+
+    <button class="floating-home-btn floating-home-right" id="returnFromDesign" onclick="resetToHome()" aria-label="Return to Home">
+      →
+    </button>
 
 
     <!-- GALLERY TRACK -->
     <main class="gallery-track" id="galleryTrack">
 
-      <!-- Final End Frame / Colophon Card -->
+      <!-- LEFT SIDE: 3x3 GRID (EXTRA DESIGN PROJECTS) -->
+      <div class="design-grid-wrapper" id="designGridWrapper">
+        
+        <div class="design-grid-3x3" id="designGrid">
+          
+          <div class="grid-square-tile" data-proj-index="0" onclick="openProjectByIndex(0, this)">
+            <img src="./paintings/websb.png" class="tile-thumb-img" alt="Lost Items">
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="1" onclick="openProjectByIndex(1, this)">
+            <img src="./paintings/pk2.png" class="tile-thumb-img" alt="Koresh Poster">
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="2" onclick="openProjectByIndex(2, this)">
+            <img src="./paintings/s2.png" class="tile-thumb-img" alt="Forgotten Messages">
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="3" onclick="openProjectByIndex(3, this)">
+            <img src="./paintings/thelovers.png" class="tile-thumb-img" alt="The Lovers">
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="4" onclick="openProjectByIndex(4, this)">
+            <video src="./paintings/10ago.mp4#t=29" class="tile-thumb-video" preload="auto" muted playsinline></video>
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="5" onclick="openProjectByIndex(5, this)">
+            <img src="./paintings/gs3.png" class="tile-thumb-img" alt="Two Pyromaniac Neighbors">
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
+            <video src="./paintings/cancel.MOV" class="tile-thumb-video" preload="auto" muted playsinline></video>
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="7" onclick="openProjectByIndex(7, this)">
+            <img src="./paintings/cm2.jpg" class="tile-thumb-img" alt="Comic Postcards">
+          </div>
+
+          <div class="grid-square-tile" data-proj-index="8" onclick="openProjectByIndex(8, this)">
+            <img src="./paintings/mg1.PNG" class="tile-thumb-img" alt="Define Your Bully">
+          </div>
+
+        </div>
+
+        <!-- THE PHYSICAL EXPANDING TILE -->
+        <div class="expanding-tile-clone" id="expandingClone">
+          <div class="mobile-card-header" id="mobileCardHeader" style="display:none;"></div>
+          
+          <div class="clone-media-wrapper" id="cloneMediaWrapper"></div>
+          
+          <button class="carousel-nav-btn carousel-prev" id="prevBtn" onclick="prevSlide(event)">‹</button>
+          <button class="carousel-nav-btn carousel-next" id="nextBtn" onclick="nextSlide(event)">›</button>
+          <div class="carousel-dots" id="carouselDots"></div>
+
+          <div class="mobile-card-footer" id="mobileCardFooter" style="display:none;"></div>
+        </div>
+
+        <!-- DESKTOP SIDE DESCRIPTION TEXT PANEL -->
+        <div class="expanded-desc-panel" id="descPanel">
+          <span class="desc-num" id="descNum">01 / SELECTED WORK</span>
+          <h2 id="descTitle">Project Title</h2>
+          <div id="descBody">
+            <p id="descText">Project description text will appear here.</p>
+          </div>
+          <button class="desc-back-btn" onclick="collapseTile()">← Back to grid</button>
+        </div>
+
+      </div>
+
+      <!-- HOME CENTER (SVG ON DESKTOP/TABLET + PNG ON MOBILE) -->
+      <div class="river-artwork-wrapper" id="homeArtwork">
+        <div class="desktop-svg-container" id="desktopSvgContainer"></div>
+        <img src="./paintings/phonebg.png" class="mobile-home-img" id="mobileHomeImg" alt="Home Artwork Mobile" onerror="this.src='./phonebg.png';">
+      </div>
+
+      <!-- RIGHT SIDE: PAINTINGS & END FRAME CARD -->
+      <img src="./paintings/2.jpeg" class="gallery-item first-painting-node" id="firstPainting" alt="Artwork 2">
+      <img src="./paintings/29.jpeg" class="gallery-item" alt="Artwork 29">
+      <img src="./paintings/18.jpeg" class="gallery-item" alt="Artwork 18">
+      <img src="./paintings/3.jpeg" class="gallery-item" alt="Artwork 3">
+      <img src="./paintings/15.jpeg" class="gallery-item" alt="Artwork 15">
+      <img src="./paintings/5.jpeg" class="gallery-item" alt="Artwork 5">
+      <img src="./paintings/11.jpeg" class="gallery-item" alt="Artwork 11">
+      <img src="./paintings/8.jpeg" class="gallery-item" alt="Artwork 8">
+      <img src="./paintings/12.jpeg" class="gallery-item" alt="Artwork 12">
+      <img src="./paintings/13.jpeg" class="gallery-item" alt="Artwork 13">
+      <img src="./paintings/4.jpeg" class="gallery-item" alt="Artwork 4">
+      <img src="./paintings/19.jpeg" class="gallery-item" alt="Artwork 19">
+      <img src="./paintings/1.jpeg" class="gallery-item" alt="Artwork 1">
+      <img src="./paintings/22.jpeg" class="gallery-item" alt="Artwork 22">
+      <img src="./paintings/24.jpeg" class="gallery-item" alt="Artwork 24">
+      <img src="./paintings/25.jpeg" class="gallery-item" alt="Artwork 25">
+      <img src="./paintings/14.jpeg" class="gallery-item" alt="Artwork 14">
+      <img src="./paintings/30.jpeg" class="gallery-item" alt="Artwork 30">
+      <img src="./paintings/17.jpeg" class="gallery-item" alt="Artwork 17">
+      <img src="./paintings/21.jpeg" class="gallery-item" alt="Artwork 21">
+
+      <!-- Final End Frame / Colophon Card (Centered, Airy & Proportional) -->
       <div class="gallery-end-card" id="endCard">
         <div class="end-card-header">
           <h4>Custom Inquiries</h4>
@@ -1034,108 +1538,15 @@
         <button class="back-home-btn" onclick="resetToHome()">Back to Home →</button>
       </div>
 
-      <!-- Paintings Ordered: 21, 17, 30, 14, 25, 24, 22, 1, 19, 4, 13, 12, 8, 11, 5, 15, 3, 18, 29, 2 -->
-      <img src="./paintings/21.jpeg" class="gallery-item" alt="Artwork 21">
-      <img src="./paintings/17.jpeg" class="gallery-item" alt="Artwork 17">
-      <img src="./paintings/30.jpeg" class="gallery-item" alt="Artwork 30">
-      <img src="./paintings/14.jpeg" class="gallery-item" alt="Artwork 14">
-      <img src="./paintings/25.jpeg" class="gallery-item" alt="Artwork 25">
-      <img src="./paintings/24.jpeg" class="gallery-item" alt="Artwork 24">
-      <img src="./paintings/22.jpeg" class="gallery-item" alt="Artwork 22">
-      <img src="./paintings/1.jpeg" class="gallery-item" alt="Artwork 1">
-      <img src="./paintings/19.jpeg" class="gallery-item" alt="Artwork 19">
-      <img src="./paintings/4.jpeg" class="gallery-item" alt="Artwork 4">
-      <img src="./paintings/13.jpeg" class="gallery-item" alt="Artwork 13">
-      <img src="./paintings/12.jpeg" class="gallery-item" alt="Artwork 12">
-      <img src="./paintings/8.jpeg" class="gallery-item" alt="Artwork 8">
-      <img src="./paintings/11.jpeg" class="gallery-item" alt="Artwork 11">
-      <img src="./paintings/5.jpeg" class="gallery-item" alt="Artwork 5">
-      <img src="./paintings/15.jpeg" class="gallery-item" alt="Artwork 15">
-      <img src="./paintings/3.jpeg" class="gallery-item" alt="Artwork 3">
-      <img src="./paintings/18.jpeg" class="gallery-item" alt="Artwork 18">
-      <img src="./paintings/29.jpeg" class="gallery-item" alt="Artwork 29">
-      <img src="./paintings/2.jpeg" class="gallery-item" id="firstPainting" alt="Artwork 2">
-
-      <!-- HOME CENTER (SVG COLLAGE) -->
-      <div class="river-artwork-wrapper" id="homeArtwork"></div>
-
-      <!-- RIGHT SIDE: 3x3 GRID (NO BORDERS) -->
-      <div class="design-grid-wrapper" id="designGridWrapper">
-        
-        <div class="design-grid-3x3" id="designGrid">
-          
-          <!-- Box 1 (Top Left): websb.png -> Lost Items -->
-          <div class="grid-square-tile" data-proj-index="0" onclick="openProjectByIndex(0, this)">
-            <img src="./paintings/websb.png" class="tile-thumb-img" alt="Lost Items">
-          </div>
-
-          <!-- Box 2 (Top Center): pk carousel -> Koresh Building Poster -->
-          <div class="grid-square-tile" data-proj-index="1" onclick="openProjectByIndex(1, this)">
-            <img src="./paintings/pk2.png" class="tile-thumb-img" alt="Koresh Poster">
-          </div>
-
-          <!-- Box 3 (Top Right): s carousel -> Forgotten Messages -->
-          <div class="grid-square-tile" data-proj-index="2" onclick="openProjectByIndex(2, this)">
-            <img src="./paintings/s2.png" class="tile-thumb-img" alt="Forgotten Messages">
-          </div>
-
-          <!-- Box 4 (Middle Left): thelovers.png -> The Lovers -->
-          <div class="grid-square-tile" data-proj-index="3" onclick="openProjectByIndex(3, this)">
-            <img src="./paintings/thelovers.png" class="tile-thumb-img" alt="The Lovers">
-          </div>
-
-          <!-- Box 5 (Middle Center): 10ago.mp4 -> 10 Agorot (starts at second 29 to avoid black screen) -->
-          <div class="grid-square-tile" data-proj-index="4" onclick="openProjectByIndex(4, this)">
-            <video src="./paintings/10ago.mp4#t=29" class="tile-thumb-video" preload="auto" muted playsinline></video>
-          </div>
-
-          <!-- Box 6 (Middle Right): gs carousel -> Two Pyromaniac Neighbors -->
-          <div class="grid-square-tile" data-proj-index="5" onclick="openProjectByIndex(5, this)">
-            <img src="./paintings/gs3.png" class="tile-thumb-img" alt="Two Pyromaniac Neighbors">
-          </div>
-
-          <!-- Box 7 (Bottom Left): cancel.MOV -> Cancel & Delete Behavior -->
-          <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
-            <video src="./paintings/cancel.MOV" class="tile-thumb-video" preload="auto" muted playsinline></video>
-          </div>
-
-          <!-- Box 8 (Bottom Center): cm carousel -> Comic Postcard Series -->
-          <div class="grid-square-tile" data-proj-index="7" onclick="openProjectByIndex(7, this)">
-            <img src="./paintings/cm2.jpg" class="tile-thumb-img" alt="Comic Postcards">
-          </div>
-
-          <!-- Box 9 (Bottom Right): mg carousel -> Define Your Bully -->
-          <div class="grid-square-tile" data-proj-index="8" onclick="openProjectByIndex(8, this)">
-            <img src="./paintings/mg1.PNG" class="tile-thumb-img" alt="Define Your Bully">
-          </div>
-
-        </div>
-
-        <!-- THE PHYSICAL EXPANDING TILE (OPENS TO THE RIGHT SIDE) -->
-        <div class="expanding-tile-clone" id="expandingClone">
-          <div class="clone-media-wrapper" id="cloneMediaWrapper"></div>
-          
-          <button class="carousel-nav-btn carousel-prev" id="prevBtn" onclick="prevSlide(event)">‹</button>
-          <button class="carousel-nav-btn carousel-next" id="nextBtn" onclick="nextSlide(event)">›</button>
-          <div class="carousel-dots" id="carouselDots"></div>
-        </div>
-
-        <!-- SIDE DESCRIPTION TEXT PANEL (OPENS TO THE LEFT SIDE) -->
-        <div class="expanded-desc-panel" id="descPanel">
-          <span class="desc-num" id="descNum">01 / SELECTED WORK</span>
-          <h2 id="descTitle">Project Title</h2>
-          <div id="descBody">
-            <p id="descText">Project description text will appear here.</p>
-          </div>
-          <button class="desc-back-btn" onclick="collapseTile()">← Back to grid</button>
-        </div>
-
-      </div>
-
     </main>
 
+    <!-- MOBILE FIXED BACK BUTTON (FOR EXPANDED PROJECTS) -->
+    <button class="floating-home-btn mobile-fixed-back-btn" id="mobileFixedBackBtn" onclick="collapseTile()" aria-label="Back">
+      ←
+    </button>
 
-    <!-- SCALE SLIDER -->
+
+    <!-- SCALE SLIDER (DESKTOP & TABLET ONLY) -->
     <div class="zoom-control-container" id="zoomControl">
       <span class="zoom-label">Scale</span>
       <input
@@ -1143,14 +1554,14 @@
         class="zoom-slider"
         id="zoomSlider"
         min="30"
-        max="75"
+        max="62"
         value="48"
         aria-label="Image Size Scale"
       >
     </div>
 
 
-    <!-- FOOTER LEFT -->
+    <!-- FOOTER LEFT (DESKTOP) / INTEGRATED FOOTER (MOBILE) -->
     <footer class="hero-footer" id="heroFooter">
       <div class="info-block">
         <p class="school">
@@ -1160,12 +1571,32 @@
           Open for custom commissions:<br>
           portraits, wedding illustrations & meaningful keepsakes
         </p>
+
+        <!-- מובייל בלבד: שורת פרטי קשר מרווחת, פרוסה סימטרית לקצוות -->
+        <div class="contact-block mobile-only-contact" id="mobileContactBlock">
+          <div class="contact-links">
+            <a href="mailto:searonen7@gmail.com" class="contact-item contact-item-mail">
+              <svg class="contact-icon" viewBox="0 0 24 24">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M22 6l-10 7L2 6"></path>
+              </svg>
+              <span>searonen7@gmail.com</span>
+            </a>
+
+            <a href="tel:+972532450020" class="contact-item contact-item-phone">
+              <svg class="contact-icon" viewBox="0 0 24 24">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>+972 53 245 0020</span>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
 
 
-    <!-- FOOTER RIGHT (CONTACT WITH ICONS) -->
-    <div class="contact-block" id="contactBlock">
+    <!-- FOOTER RIGHT (DESKTOP) -->
+    <div class="desktop-contact-block" id="desktopContactBlock">
       <div class="contact-links">
         <a href="mailto:searonen7@gmail.com" class="contact-item">
           <svg class="contact-icon" viewBox="0 0 24 24">
@@ -1195,18 +1626,24 @@
 
     const track = document.getElementById("galleryTrack");
     const homeArtwork = document.getElementById("homeArtwork");
+    const desktopSvgContainer = document.getElementById("desktopSvgContainer");
     const firstPainting = document.getElementById("firstPainting");
     const endCard = document.getElementById("endCard");
     const designGridWrapper = document.getElementById("designGridWrapper");
-    const sideLeft = document.getElementById("sideTextLeft");
-    const sideRight = document.getElementById("sideTextRight");
+    
+    const sideNavLeft = document.getElementById("sideNavLeft");
+    const sideNavRight = document.getElementById("sideNavRight");
+    const returnFromPaintings = document.getElementById("returnFromPaintings");
+    const returnFromDesign = document.getElementById("returnFromDesign");
+    
     const heroTitle = document.getElementById("heroTitle");
     const heroTitleContent = document.getElementById("heroTitleContent");
     const heroFooter = document.getElementById("heroFooter");
-    const contactBlock = document.getElementById("contactBlock");
+    const desktopContactBlock = document.getElementById("desktopContactBlock");
+    const themeToggle = document.getElementById("themeToggle");
     const zoomControl = document.getElementById("zoomControl");
     const zoomSlider = document.getElementById("zoomSlider");
-    const themeToggle = document.getElementById("themeToggle");
+    const mobileFixedBackBtn = document.getElementById("mobileFixedBackBtn");
 
     const designGrid = document.getElementById("designGrid");
     const tiles = document.querySelectorAll(".grid-square-tile");
@@ -1220,6 +1657,9 @@
     const descNum = document.getElementById("descNum");
     const descTitle = document.getElementById("descTitle");
     const descBody = document.getElementById("descBody");
+
+    const mobileCardHeader = document.getElementById("mobileCardHeader");
+    const mobileCardFooter = document.getElementById("mobileCardFooter");
 
     let initialOffset = 0;
     let cachedNodes = [];
@@ -1249,7 +1689,7 @@
         num: "03",
         title: "Forgotten Messages (מסרים שכוחים)",
         desc: "A collection of stickers found scratched and weathered on the streets, exploring their visual deconstruction and reconstruction.",
-        items: ["./paintings/s2.png", "./paintings/s1.png", "./paintings/s3.png", "./paintings/s4.png", "./paintings/s5.png"]
+        items: ["./paintings/s2.png", "./paintings/s3.png", "./paintings/s4.png", "./paintings/s5.png"]
       },
       {
         num: "04",
@@ -1293,7 +1733,7 @@
     let currentSlideIndex = 0;
 
     /* =================================
-       INTERACTIVE HOVER PREVIEWS (GIF / VIDEO IN GRID)
+       INTERACTIVE HOVER PREVIEWS
     ================================== */
 
     tiles.forEach(tile => {
@@ -1358,6 +1798,7 @@
       if (isVideo) {
         const vid = document.createElement('video');
         vid.src = currentSrc;
+        vid.className = 'video-clean-frame';
         vid.autoplay = true;
         vid.controls = true;
         vid.muted = false;
@@ -1367,7 +1808,19 @@
         const img = document.createElement('img');
         img.src = currentSrc;
         img.alt = proj.title;
+
+        if (currentProjectIndex === 5 && currentSlideIndex === 0) {
+          img.classList.add('media-scaled-down');
+        }
+
         cloneMediaWrapper.appendChild(img);
+      }
+
+      expandingClone.classList.remove('project-tight-arrows', 'project-stickers-arrows');
+      if (currentProjectIndex === 8) {
+        expandingClone.classList.add('project-tight-arrows');
+      } else if (currentProjectIndex === 2) {
+        expandingClone.classList.add('project-stickers-arrows');
       }
 
       if (proj.items.length > 1) {
@@ -1402,7 +1855,7 @@
     }
 
     /* =================================
-       FLIP EXPANSION (EXPANDS TO THE RIGHT)
+       FLIP EXPANSION (RESPONSIVE)
     ================================== */
 
     function expandTile(tileElement) {
@@ -1411,6 +1864,7 @@
       activeTile = tileElement;
 
       const proj = projectsData[currentProjectIndex];
+      const isMobile = window.innerWidth <= 768;
 
       const wrapperRect = designGridWrapper.getBoundingClientRect();
       const tileRect = tileElement.getBoundingClientRect();
@@ -1434,35 +1888,59 @@
         if (t !== tileElement) t.classList.add("dimmed-tile");
       });
 
-      const targetHeight = Math.min(window.innerHeight * 0.54, 480);
-      const targetWidth = targetHeight;
-      const targetTop = (wrapperRect.height - targetHeight) / 2;
-      const targetLeft = wrapperRect.width - targetWidth - 20;
+      if (isMobile) {
+        mobileCardHeader.style.display = 'flex';
+        mobileCardFooter.style.display = 'flex';
+        mobileFixedBackBtn.style.display = 'flex';
+        
+        mobileCardHeader.innerHTML = `
+          <span class="m-num">${proj.num} / SELECTED WORK</span>
+          <h3 class="m-title">${proj.title}</h3>
+        `;
 
-      descNum.textContent = proj.num + " / SELECTED WORK";
-      descTitle.textContent = proj.title;
-      
-      let bodyHtml = `<p>${proj.desc}</p>`;
-      if (proj.link) {
-        bodyHtml += `<a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="project-link-btn" onclick="event.stopPropagation()">Visit Project Live ↗</a>`;
+        let footerHtml = `<p>${proj.desc}</p>`;
+        if (proj.link) {
+          footerHtml += `<a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="m-link" onclick="event.stopPropagation()">Visit Project Live ↗</a>`;
+        }
+        mobileCardFooter.innerHTML = footerHtml;
+
+        descPanel.classList.remove("active");
+      } else {
+        mobileCardHeader.style.display = 'none';
+        mobileCardFooter.style.display = 'none';
+        mobileFixedBackBtn.style.display = 'none';
+
+        const targetHeight = Math.min(window.innerHeight * 0.54, 480);
+        const targetWidth = targetHeight;
+        const targetTop = (wrapperRect.height - targetHeight) / 2;
+        const targetLeft = wrapperRect.width - targetWidth - 20;
+
+        descNum.textContent = proj.num + " / SELECTED WORK";
+        descTitle.textContent = proj.title;
+        
+        let bodyHtml = `<p>${proj.desc}</p>`;
+        if (proj.link) {
+          bodyHtml += `<a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="project-link-btn" onclick="event.stopPropagation()">Visit Project Live ↗</a>`;
+        }
+        descBody.innerHTML = bodyHtml;
+
+        requestAnimationFrame(() => {
+          expandingClone.style.transition = "top 0.45s cubic-bezier(0.25, 1, 0.5, 1), left 0.45s cubic-bezier(0.25, 1, 0.5, 1), width 0.45s cubic-bezier(0.25, 1, 0.5, 1), height 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease";
+          expandingClone.style.left = `${targetLeft}px`;
+          expandingClone.style.top = `${targetTop}px`;
+          expandingClone.style.width = `${targetWidth}px`;
+          expandingClone.style.height = `${targetHeight}px`;
+
+          descPanel.classList.add("active");
+        });
       }
-      descBody.innerHTML = bodyHtml;
-
-      requestAnimationFrame(() => {
-        expandingClone.style.transition = "top 0.55s cubic-bezier(0.25, 1, 0.5, 1), left 0.55s cubic-bezier(0.25, 1, 0.5, 1), width 0.55s cubic-bezier(0.25, 1, 0.5, 1), height 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease";
-        expandingClone.style.left = `${targetLeft}px`;
-        expandingClone.style.top = `${targetTop}px`;
-        expandingClone.style.width = `${targetWidth}px`;
-        expandingClone.style.height = `${targetHeight}px`;
-
-        descPanel.classList.add("active");
-      });
     }
 
     function collapseTile() {
       if (!isExpanded || !activeTile) return;
 
       descPanel.classList.remove("active");
+      mobileFixedBackBtn.style.display = 'none';
 
       const vid = cloneMediaWrapper.querySelector('video');
       if (vid) vid.pause();
@@ -1475,6 +1953,10 @@
       const originWidth = tileRect.width;
       const originHeight = tileRect.height;
 
+      mobileCardHeader.style.display = 'none';
+      mobileCardFooter.style.display = 'none';
+
+      expandingClone.style.transition = "top 0.35s cubic-bezier(0.25, 1, 0.5, 1), left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1), height 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease";
       expandingClone.style.left = `${originLeft}px`;
       expandingClone.style.top = `${originTop}px`;
       expandingClone.style.width = `${originWidth}px`;
@@ -1486,12 +1968,12 @@
         tiles.forEach(t => t.classList.remove("dimmed-tile"));
         activeTile = null;
         isExpanded = false;
-      }, 520);
+      }, 360);
     }
 
-    /* =================================
-       INSTANT VIRTUAL DUAL-SCROLL ENGINE
-    ================================== */
+    /* =======================================================
+       UNIVERSAL DUAL-SCROLL ENGINE (SWAPPED & CENTERED)
+    ======================================================= */
 
     let currentVirtualPos = 0;
     let targetVirtualPos = 0;
@@ -1500,14 +1982,17 @@
     let isAnimating = false;
 
     function initVirtualScrollLimits() {
-      if (!homeArtwork || !designGridWrapper || !designGrid) return;
+      if (!homeArtwork || !designGridWrapper || !designGrid || !endCard) return;
       initialOffset = homeArtwork.offsetLeft;
       
-      maxLeftShift = initialOffset; 
-      
-      const leftMarginPx = window.innerWidth * 0.055;
-      const gridCenterInTrack = designGridWrapper.offsetLeft + designGrid.offsetLeft + (designGrid.offsetWidth / 2);
-      maxRightShift = gridCenterInTrack - initialOffset + leftMarginPx - (window.innerWidth / 2);
+      const isMobile = window.innerWidth <= 768;
+      const leftMarginPx = window.innerWidth * (isMobile ? 0.06 : 0.068);
+
+      const gridCenter = designGridWrapper.offsetLeft + (designGridWrapper.offsetWidth / 2);
+      maxLeftShift = initialOffset - gridCenter + (window.innerWidth / 2) - leftMarginPx;
+
+      const endCardRight = endCard.offsetLeft + endCard.offsetWidth;
+      maxRightShift = endCardRight - initialOffset - window.innerWidth + (leftMarginPx * 2);
 
       renderTrack();
     }
@@ -1515,8 +2000,46 @@
     window.addEventListener("wheel", function(e) {
       if (isExpanded) return;
 
-      targetVirtualPos += e.deltaY * 1.5;
-      targetVirtualPos = Math.max(-maxRightShift, Math.min(maxLeftShift, targetVirtualPos));
+      let scrollDelta = 0;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        scrollDelta = e.deltaX;
+      } else {
+        scrollDelta = e.deltaY;
+      }
+
+      targetVirtualPos += scrollDelta * 1.5;
+      targetVirtualPos = Math.max(-maxLeftShift, Math.min(maxRightShift, targetVirtualPos));
+
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
+    }, { passive: true });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    window.addEventListener("touchstart", function(e) {
+      if (isExpanded || e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchmove", function(e) {
+      if (isExpanded || e.touches.length !== 1) return;
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = currentX - touchStartX;
+      const deltaY = currentY - touchStartY;
+
+      touchStartX = currentX;
+      touchStartY = currentY;
+
+      const swipeDelta = Math.abs(deltaX) > Math.abs(deltaY) ? -deltaX : deltaY;
+
+      targetVirtualPos += swipeDelta * 1.8;
+      targetVirtualPos = Math.max(-maxLeftShift, Math.min(maxRightShift, targetVirtualPos));
 
       if (!isAnimating) {
         requestAnimationFrame(smoothScrollLoop);
@@ -1538,30 +2061,43 @@
     }
 
     function renderTrack() {
-      const shift = -initialOffset + currentVirtualPos;
+      const shift = -initialOffset - currentVirtualPos;
       track.style.transform = `translateY(-50%) translateX(${shift}px)`;
 
       const distanceFromHome = Math.abs(currentVirtualPos);
+      const isMobile = window.innerWidth <= 768;
 
       if (distanceFromHome > 15) {
-        sideLeft.classList.add("fade-out");
-        sideRight.classList.add("fade-out");
+        sideNavLeft.classList.add("fade-out");
+        sideNavRight.classList.add("fade-out");
         heroTitleContent.classList.add("fade-out");
         heroFooter.classList.add("fade-out");
-        contactBlock.classList.add("fade-out");
+        desktopContactBlock.classList.add("fade-out");
 
-        if (currentVirtualPos > 40) {
+        if (currentVirtualPos > 40 && !isMobile) {
           zoomControl.classList.add("visible");
         } else {
           zoomControl.classList.remove("visible");
         }
       } else {
-        sideLeft.classList.remove("fade-out");
-        sideRight.classList.remove("fade-out");
+        sideNavLeft.classList.remove("fade-out");
+        sideNavRight.classList.remove("fade-out");
         heroTitleContent.classList.remove("fade-out");
         heroFooter.classList.remove("fade-out");
-        contactBlock.classList.remove("fade-out");
+        desktopContactBlock.classList.remove("fade-out");
         zoomControl.classList.remove("visible");
+      }
+
+      if (currentVirtualPos > 250) {
+        returnFromPaintings.classList.add("visible");
+      } else {
+        returnFromPaintings.classList.remove("visible");
+      }
+
+      if (currentVirtualPos < -250) {
+        returnFromDesign.classList.add("visible");
+      } else {
+        returnFromDesign.classList.remove("visible");
       }
     }
 
@@ -1574,11 +2110,18 @@
       }
     }
 
-    sideLeft.addEventListener("click", function() {
+    sideNavLeft.addEventListener("click", function() {
+      targetVirtualPos = -maxLeftShift;
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
+    });
+
+    sideNavRight.addEventListener("click", function() {
       if (!firstPainting) return;
-      const leftMarginPx = window.innerWidth * 0.055;
-      targetVirtualPos = (initialOffset - (firstPainting.offsetLeft + firstPainting.offsetWidth)) + (window.innerWidth - leftMarginPx);
-      targetVirtualPos = Math.min(maxLeftShift, Math.max(0, targetVirtualPos));
+      targetVirtualPos = firstPainting.offsetLeft - initialOffset;
+      targetVirtualPos = Math.min(maxRightShift, targetVirtualPos);
       
       if (!isAnimating) {
         requestAnimationFrame(smoothScrollLoop);
@@ -1586,16 +2129,8 @@
       }
     });
 
-    sideRight.addEventListener("click", function() {
-      targetVirtualPos = -maxRightShift;
-      if (!isAnimating) {
-        requestAnimationFrame(smoothScrollLoop);
-        isAnimating = true;
-      }
-    });
-
     /* =================================
-       FETCH & SETUP SVG
+       FETCH & SETUP SVG (DESKTOP & TABLET)
     ================================== */
 
     async function loadInlineSVG() {
@@ -1603,12 +2138,11 @@
         const response = await fetch('./seasweb.svg');
         if (!response.ok) throw new Error("Could not load SVG");
         const svgText = await response.text();
-        homeArtwork.innerHTML = svgText;
         
+        desktopSvgContainer.innerHTML = svgText;
         setupSVGNodes();
       } catch (err) {
         console.warn("SVG loading fallback:", err);
-        homeArtwork.innerHTML = `<img src="./seasweb.svg" class="river-artwork" alt="Collage">`;
       } finally {
         initVirtualScrollLimits();
         track.classList.add("ready");
@@ -1616,7 +2150,7 @@
     }
 
     function setupSVGNodes() {
-      const svg = homeArtwork.querySelector("svg");
+      const svg = desktopSvgContainer.querySelector("svg");
       if (!svg) return;
 
       const candidates = svg.querySelectorAll("svg > g, svg > g > g, svg > image, svg > path:not([clip-path])");
@@ -1636,7 +2170,7 @@
       const RADIUS = 110;
 
       homeArtwork.addEventListener("mousemove", function(e) {
-        if (Math.abs(currentVirtualPos) > 40) return;
+        if (Math.abs(currentVirtualPos) > 40 || window.innerWidth <= 768) return;
 
         const mouseX = e.clientX;
         const mouseY = e.clientY;
@@ -1679,7 +2213,7 @@
     }
 
     /* =================================
-       THEME TOGGLE
+       THEME & SCALE CONTROLS
     ================================== */
 
     themeToggle.addEventListener("click", function(e) {
@@ -1700,7 +2234,8 @@
         isExpanded &&
         !event.target.closest(".grid-square-tile") &&
         !event.target.closest(".expanding-tile-clone") &&
-        !event.target.closest(".expanded-desc-panel")
+        !event.target.closest(".expanded-desc-panel") &&
+        !event.target.closest(".mobile-fixed-back-btn")
       ) {
         collapseTile();
         return;
@@ -1709,14 +2244,17 @@
       if (
         Math.abs(currentVirtualPos) > 25 &&
         !event.target.closest(".hero-title-container") &&
-        !event.target.closest("#zoomControl") &&
         !event.target.closest("#themeToggle") &&
-        !event.target.closest("#contactBlock") &&
+        !event.target.closest("#desktopContactBlock") &&
+        !event.target.closest("#mobileContactBlock") &&
         !event.target.closest("#endCard") &&
+        !event.target.closest("#zoomControl") &&
         !event.target.closest(".grid-square-tile") &&
         !event.target.closest(".expanding-tile-clone") &&
         !event.target.closest(".expanded-desc-panel") &&
-        !event.target.closest(".side-text")
+        !event.target.closest(".side-nav-anchor") &&
+        !event.target.closest(".floating-home-btn") &&
+        !event.target.closest(".mobile-fixed-back-btn")
       ) {
         resetToHome();
       }
@@ -1728,6 +2266,16 @@
       } else if (isExpanded) {
         if (e.key === "ArrowLeft") prevSlide();
         if (e.key === "ArrowRight") nextSlide();
+      } else {
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          targetVirtualPos -= 240;
+          targetVirtualPos = Math.max(-maxLeftShift, targetVirtualPos);
+          if (!isAnimating) { requestAnimationFrame(smoothScrollLoop); isAnimating = true; }
+        } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          targetVirtualPos += 240;
+          targetVirtualPos = Math.min(maxRightShift, targetVirtualPos);
+          if (!isAnimating) { requestAnimationFrame(smoothScrollLoop); isAnimating = true; }
+        }
       }
     });
 
