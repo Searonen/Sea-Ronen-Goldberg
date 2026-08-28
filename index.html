@@ -494,14 +494,18 @@
       gap: 6vw;
       z-index: 5;
       will-change: transform;
-      opacity: 1;
+      opacity: 0;
       transition: opacity 0.4s ease;
       transform: translateY(-50%);
     }
 
+    .gallery-track.ready {
+      opacity: 1;
+    }
+
 
     /* =========================================
-       END FRAME / COLOPHON CARD (PERFECTED & AIRY)
+       END FRAME / COLOPHON CARD
     ========================================= */
 
     .gallery-end-card {
@@ -602,7 +606,7 @@
 
 
     /* =========================
-       PAINTINGS (WITH GAP BUFFER)
+       PAINTINGS
     ========================= */
 
     .first-painting-node {
@@ -643,15 +647,31 @@
       transform: translate(-35px, -25px);
     }
 
-    .main-home-img {
-      height: 62vh;
-      max-height: 62vh;
+    .desktop-svg-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
       width: auto;
-      max-width: 80vw;
-      object-fit: contain;
+    }
+
+    .desktop-svg-container svg {
+      height: 76vh;
+      width: auto;
+      max-height: 76vh;
+      overflow: visible;
       display: block;
-      user-select: none;
-      -webkit-user-drag: none;
+    }
+
+    .svg-interactive-node {
+      transform-box: fill-box;
+      transform-origin: center center;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+
+    .mobile-home-img {
+      display: none;
     }
 
 
@@ -1097,6 +1117,10 @@
         stroke-width: 1.4;
       }
 
+      .desktop-svg-container {
+        display: none !important;
+      }
+
       .river-artwork-wrapper {
         height: 48vh;
         width: 88vw;
@@ -1108,11 +1132,15 @@
         justify-content: center;
       }
 
-      .main-home-img {
-        height: 46vh !important;
-        max-height: 46vh !important;
-        width: 86vw !important;
-        max-width: 86vw !important;
+      .mobile-home-img {
+        display: block !important;
+        height: 46vh;
+        max-height: 46vh;
+        width: 86vw;
+        max-width: 86vw;
+        object-fit: contain;
+        transform: none !important;
+        pointer-events: none;
       }
 
       .hero-footer {
@@ -1415,7 +1443,7 @@
           </div>
 
           <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
-            <video src="./paintings/cancel.MOV" class="tile-thumb-video" preload="auto" muted playsinline></video>
+            <video src="./paintings/cancel.mov" class="tile-thumb-video" preload="auto" muted playsinline></video>
           </div>
 
           <div class="grid-square-tile" data-proj-index="7" onclick="openProjectByIndex(7, this)">
@@ -1453,9 +1481,10 @@
 
       </div>
 
-      <!-- HOME CENTER (RELIABLE IMAGE EMBED) -->
+      <!-- HOME CENTER (SVG ON DESKTOP/TABLET + PNG ON MOBILE) -->
       <div class="river-artwork-wrapper" id="homeArtwork">
-        <img src="./phonebg.png" class="main-home-img" alt="Sea Ronen Goldberg Artwork" onerror="this.src='./paintings/phonebg.png';">
+        <div class="desktop-svg-container" id="desktopSvgContainer"></div>
+        <img src="./phonebg.png" class="mobile-home-img" id="mobileHomeImg" alt="Home Artwork Mobile" onerror="this.src='./paintings/phonebg.png';">
       </div>
 
       <!-- RIGHT SIDE: PAINTINGS & END FRAME CARD -->
@@ -1480,7 +1509,7 @@
       <img src="./paintings/17.jpeg" class="gallery-item" alt="Artwork 17">
       <img src="./paintings/21.jpeg" class="gallery-item" alt="Artwork 21">
 
-      <!-- Final End Frame / Colophon Card (Centered, Airy & Proportional) -->
+      <!-- Final End Frame Card -->
       <div class="gallery-end-card" id="endCard">
         <div class="end-card-header">
           <h4>Custom Inquiries</h4>
@@ -1509,13 +1538,13 @@
 
     </main>
 
-    <!-- MOBILE FIXED BACK BUTTON (FOR EXPANDED PROJECTS) -->
+    <!-- MOBILE FIXED BACK BUTTON -->
     <button class="floating-home-btn mobile-fixed-back-btn" id="mobileFixedBackBtn" onclick="collapseTile()" aria-label="Back">
       ←
     </button>
 
 
-    <!-- SCALE SLIDER (DESKTOP & TABLET ONLY) -->
+    <!-- SCALE SLIDER -->
     <div class="zoom-control-container" id="zoomControl">
       <span class="zoom-label">Scale</span>
       <input
@@ -1530,7 +1559,7 @@
     </div>
 
 
-    <!-- FOOTER LEFT (DESKTOP) / INTEGRATED FOOTER (MOBILE) -->
+    <!-- FOOTER LEFT -->
     <footer class="hero-footer" id="heroFooter">
       <div class="info-block">
         <p class="school">
@@ -1541,7 +1570,6 @@
           portraits, wedding illustrations & meaningful keepsakes
         </p>
 
-        <!-- מובייל בלבד -->
         <div class="contact-block mobile-only-contact" id="mobileContactBlock">
           <div class="contact-links">
             <a href="mailto:searonen7@gmail.com" class="contact-item contact-item-mail">
@@ -1564,7 +1592,7 @@
     </footer>
 
 
-    <!-- FOOTER RIGHT (DESKTOP) -->
+    <!-- FOOTER RIGHT -->
     <div class="desktop-contact-block" id="desktopContactBlock">
       <div class="contact-links">
         <a href="mailto:searonen7@gmail.com" class="contact-item">
@@ -1595,6 +1623,7 @@
 
     const track = document.getElementById("galleryTrack");
     const homeArtwork = document.getElementById("homeArtwork");
+    const desktopSvgContainer = document.getElementById("desktopSvgContainer");
     const firstPainting = document.getElementById("firstPainting");
     const endCard = document.getElementById("endCard");
     const designGridWrapper = document.getElementById("designGridWrapper");
@@ -1630,6 +1659,8 @@
     const mobileCardFooter = document.getElementById("mobileCardFooter");
 
     let initialOffset = 0;
+    let cachedNodes = [];
+    let ticking = false;
     let isExpanded = false;
     let activeTile = null;
 
@@ -1679,7 +1710,7 @@
         num: "07",
         title: "Cancel & Delete Behavior",
         desc: "A Visual Communication academic assignment exploring kinetic character and behavior for cancellation and deletion buttons.",
-        items: ["./paintings/cancel.MOV"]
+        items: ["./paintings/cancel.mov"]
       },
       {
         num: "08",
@@ -2096,6 +2127,89 @@
     });
 
     /* =================================
+       FETCH & SETUP SVG (DESKTOP & TABLET)
+    ================================== */
+
+    async function loadInlineSVG() {
+      try {
+        const response = await fetch('./seasweb.svg');
+        if (!response.ok) throw new Error("Could not load SVG");
+        const svgText = await response.text();
+        
+        desktopSvgContainer.innerHTML = svgText;
+        setupSVGNodes();
+      } catch (err) {
+        console.warn("SVG loading fallback:", err);
+      } finally {
+        initVirtualScrollLimits();
+        track.classList.add("ready");
+      }
+    }
+
+    function setupSVGNodes() {
+      const svg = desktopSvgContainer.querySelector("svg");
+      if (!svg) return;
+
+      const candidates = svg.querySelectorAll("svg > g, svg > g > g, svg > image, svg > path:not([clip-path])");
+      cachedNodes = [];
+
+      candidates.forEach(el => {
+        if (el.closest("clipPath") || el.closest("mask") || el.tagName === "clipPath") return;
+        
+        el.classList.add("svg-interactive-node");
+        cachedNodes.push(el);
+      });
+
+      initGentleProximity(svg);
+    }
+
+    function initGentleProximity(svg) {
+      const RADIUS = 110;
+
+      homeArtwork.addEventListener("mousemove", function(e) {
+        if (Math.abs(currentVirtualPos) > 40 || window.innerWidth <= 768) return;
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        if (!ticking) {
+          requestAnimationFrame(function() {
+            cachedNodes.forEach(el => {
+              const rect = el.getBoundingClientRect();
+              const cx = rect.left + rect.width / 2;
+              const cy = rect.top + rect.height / 2;
+
+              const dx = mouseX - cx;
+              const dy = mouseY - cy;
+              const dist = Math.hypot(dx, dy);
+
+              if (dist < RADIUS) {
+                const progress = (1 - dist / RADIUS);
+                const smoothForce = Math.pow(progress, 1.4);
+
+                const scale = 1 + (smoothForce * 0.32);
+                const moveY = -smoothForce * 12;
+                const moveX = -(dx / dist) * smoothForce * 8;
+
+                el.style.transform = `translate(${moveX.toFixed(2)}px, ${moveY.toFixed(2)}px) scale(${scale.toFixed(3)})`;
+              } else {
+                el.style.transform = "translate(0px, 0px) scale(1)";
+              }
+            });
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      homeArtwork.addEventListener("mouseleave", function() {
+        cachedNodes.forEach(el => {
+          el.style.transform = "translate(0px, 0px) scale(1)";
+        });
+      });
+    }
+
+    /* =================================
        THEME & SCALE CONTROLS
     ================================== */
 
@@ -2163,7 +2277,7 @@
     });
 
     window.addEventListener("load", function() {
-      initVirtualScrollLimits();
+      loadInlineSVG();
     });
 
     window.addEventListener("resize", function() {
