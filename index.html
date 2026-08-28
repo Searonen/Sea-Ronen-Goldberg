@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
   <title>Sea Ronen Goldberg | Original Custom Art & Design</title>
 
@@ -71,6 +71,7 @@
 
       overflow: hidden;
       height: 100vh;
+      height: 100dvh;
       width: 100vw;
       position: relative;
       cursor: default;
@@ -92,6 +93,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -115,6 +117,7 @@
       background: var(--glass-bg);
       border: 1.5px solid var(--accent-color);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       
       display: flex;
       align-items: center;
@@ -350,7 +353,7 @@
 
     .floating-home-btn {
       position: fixed;
-      bottom: 6vh;
+      bottom: max(6vh, env(safe-area-inset-bottom, 20px));
       width: 44px;
       height: 44px;
       border-radius: 50%;
@@ -363,6 +366,7 @@
       cursor: pointer;
       font-size: 1.3rem;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 60;
       opacity: 0;
       pointer-events: none;
@@ -395,7 +399,7 @@
     /* GRID RETURN ICON BUTTON */
     .grid-return-btn {
       position: fixed;
-      bottom: 6vh;
+      bottom: max(6vh, env(safe-area-inset-bottom, 20px));
       left: var(--left-margin);
       width: 44px;
       height: 44px;
@@ -407,6 +411,7 @@
       justify-content: center;
       cursor: pointer;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 65;
       opacity: 0;
       pointer-events: none;
@@ -451,7 +456,7 @@
 
     .hero-footer {
       position: absolute;
-      bottom: 6vh;
+      bottom: max(6vh, env(safe-area-inset-bottom, 20px));
       left: var(--left-margin);
       z-index: 20;
       pointer-events: none;
@@ -481,7 +486,7 @@
 
     .desktop-contact-block {
       position: absolute;
-      bottom: 6vh;
+      bottom: max(6vh, env(safe-area-inset-bottom, 20px));
       right: var(--right-margin);
       z-index: 20;
       text-align: right;
@@ -508,6 +513,7 @@
       font-weight: 400;
       opacity: 0.9;
       transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: auto;
     }
 
     .contact-item:hover {
@@ -541,6 +547,7 @@
       top: 50%;
       left: var(--left-margin);
       height: 76vh;
+      height: 76dvh;
       display: flex;
       align-items: center;
       gap: 6vw;
@@ -577,6 +584,7 @@
       text-align: center;
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
       cursor: default;
     }
@@ -692,6 +700,7 @@
       align-items: center;
       justify-content: center;
       height: 76vh;
+      height: 76dvh;
       width: auto;
       flex-shrink: 0;
       position: relative;
@@ -737,6 +746,7 @@
       justify-content: center;
       margin-right: 18vw;
       height: 76vh;
+      height: 76dvh;
       width: 76vw;
       max-width: 1050px;
       flex-shrink: 0;
@@ -773,7 +783,6 @@
       text-align: center;
       cursor: pointer;
       user-select: none;
-      overflow: hidden;
       position: relative;
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
     }
@@ -797,6 +806,8 @@
       height: 100%;
       object-fit: contain;
       pointer-events: none;
+      display: block;
+      background: transparent;
     }
 
 
@@ -885,6 +896,7 @@
       font-size: 1.2rem;
       transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease, left 0.2s ease, right 0.2s ease;
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .carousel-nav-btn:hover {
@@ -1021,7 +1033,7 @@
 
     .zoom-control-container {
       position: fixed;
-      bottom: 6.8vh;
+      bottom: max(6.8vh, env(safe-area-inset-bottom, 24px));
       left: 50%;
       transform: translateX(-50%);
       z-index: 40;
@@ -1091,9 +1103,9 @@
     @media (max-width: 768px) {
 
       :root {
-        --left-margin: 6vw;
-        --right-margin: 6vw;
-        --item-height: 64vh;
+        --left-margin: 5.5vw;
+        --right-margin: 5.5vw;
+        --item-height: 60dvh;
       }
 
       .zoom-control-container {
@@ -1106,67 +1118,77 @@
 
       .theme-toggle-btn {
         right: var(--right-margin);
-        top: 6.2vh;
-        width: 60px;
-        height: 32px;
+        top: max(3.5dvh, env(safe-area-inset-top, 16px));
+        width: 56px;
+        height: 30px;
+      }
+
+      .theme-toggle-btn .theme-icon-box {
+        width: 20px;
+        height: 20px;
+      }
+
+      .theme-toggle-btn .icon-svg {
+        width: 15px;
+        height: 15px;
       }
 
       .toggle-thumb {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
       }
 
       body.light-mode .toggle-thumb {
-        transform: translateX(27px);
+        transform: translateX(26px);
       }
 
       .hero-title-container {
         left: var(--left-margin);
-        top: 6.2vh;
+        top: max(3.5dvh, env(safe-area-inset-top, 16px));
       }
 
       .artist-persistent-name {
-        font-size: 0.8rem;
-        margin-bottom: 0.15rem;
+        font-size: 0.75rem;
+        margin-bottom: 0.1rem;
       }
 
       .hero-title-content {
-        margin-top: 3px;
-        row-gap: 5px;
+        margin-top: 2px;
+        row-gap: 2px;
       }
 
       .hero-title-content .line-original {
-        font-size: 1.45rem;
+        font-size: 1.35rem;
         letter-spacing: 0.02em;
         line-height: 0.92;
       }
 
       .hero-title-content .line-custom,
       .hero-title-content .line-art {
-        font-size: 2.85rem;
+        font-size: 2.6rem;
         line-height: 0.92;
       }
 
       .side-nav-left {
-        left: 4px;
-        padding: 6px 2px;
-        gap: 6px;
+        left: 2px;
+        padding: 8px 2px;
+        gap: 4px;
       }
 
       .side-nav-right {
-        right: 4px;
-        padding: 6px 2px;
-        gap: 6px;
+        right: 2px;
+        padding: 8px 2px;
+        gap: 4px;
       }
 
       .side-nav-label {
-        font-size: 0.58rem;
-        letter-spacing: 0.14em;
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
       }
 
       .side-nav-chevron svg {
-        height: 38px;
-        width: 12px;
+        height: 34px;
+        width: 10px;
         stroke-width: 1.4;
       }
 
@@ -1174,44 +1196,49 @@
         display: none !important;
       }
 
+      /* מירכוז מדויק עם היסט ימינה לאיזון מושלם */
       .river-artwork-wrapper {
-        height: 48vh;
-        width: 88vw;
-        max-width: 88vw;
-        margin: 0 auto;
-        transform: translate(0, 0);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        height: 50dvh !important;
+        width: calc(100vw - 56px) !important;
+        max-width: calc(100vw - 56px) !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin: 0 auto !important;
+        transform: translate(12px, -8px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
 
       .mobile-home-img {
         display: block !important;
-        height: 46vh;
-        max-height: 46vh;
-        width: 86vw;
-        max-width: 86vw;
-        object-fit: contain;
+        height: 100% !important;
+        width: 100% !important;
+        max-height: 50dvh !important;
+        max-width: calc(100vw - 56px) !important;
+        object-fit: contain !important;
         transform: none !important;
-        pointer-events: none;
+        margin: 0 auto !important;
+        pointer-events: none !important;
       }
 
+      /* הרמת הפוטר והגדלת המידע כלפי מעלה */
       .hero-footer {
         left: var(--left-margin);
         right: var(--right-margin);
-        bottom: 5.6vh;
+        bottom: max(5.5dvh, calc(env(safe-area-inset-bottom, 0px) + 20px)) !important;
         width: calc(100vw - (var(--left-margin) * 2));
       }
 
       .info-block {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 5px;
         width: 100%;
       }
 
       .info-block .school {
-        font-size: 0.92rem;
+        font-size: 0.94rem !important;
         font-weight: 700;
         margin-bottom: 0;
         line-height: 1.35;
@@ -1219,8 +1246,8 @@
 
       .info-block .commissions {
         display: block !important;
-        font-size: 0.84rem;
-        line-height: 1.45;
+        font-size: 0.84rem !important;
+        line-height: 1.4;
         opacity: 0.92;
       }
 
@@ -1228,9 +1255,9 @@
         display: block !important;
         position: static !important;
         text-align: left !important;
-        margin-top: 14px;
-        border-top: 1px solid var(--accent-dim);
-        padding-top: 12px;
+        margin-top: 10px;
+        border-top: 1.2px solid var(--accent-dim);
+        padding-top: 9px;
         width: 100%;
       }
 
@@ -1252,7 +1279,13 @@
       }
 
       .contact-item {
-        font-size: 0.76rem !important;
+        font-size: 0.82rem !important;
+        gap: 6px !important;
+      }
+
+      .contact-icon {
+        width: 15px !important;
+        height: 15px !important;
       }
 
       .desktop-contact-block {
@@ -1265,44 +1298,49 @@
       }
 
       .gallery-item {
-        height: 64vh !important;
-        max-height: 64vh !important;
+        height: 58dvh !important;
+        max-height: 58dvh !important;
         max-width: 88vw !important;
       }
 
       .gallery-end-card {
-        height: 64vh !important;
-        max-height: 64vh !important;
+        height: 58dvh !important;
+        max-height: 58dvh !important;
         width: 82vw !important;
       }
 
       .design-grid-wrapper {
-        margin-right: 10vw;
+        margin-right: 8vw;
         width: 88vw;
-        height: 72vh;
+        height: 68dvh;
       }
 
       .design-grid-3x3 {
-        height: 46vh;
-        width: 84vw;
-        gap: 14px;
+        height: 48dvh;
+        width: 86vw;
+        gap: 12px;
+      }
+
+      .grid-square-tile {
+        max-width: 100px;
+        max-height: 100px;
       }
 
       .expanding-tile-clone.active {
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        width: 86vw !important;
+        width: 88vw !important;
         height: auto !important;
-        max-height: 82vh;
+        max-height: 80dvh;
         padding: 0;
         justify-content: center;
-        gap: 14px;
+        gap: 12px;
       }
 
       .clone-media-wrapper {
-        height: 38vh;
-        max-height: 300px;
+        height: 34dvh;
+        max-height: 280px;
         width: 100%;
         margin: 0;
       }
@@ -1312,14 +1350,14 @@
         max-height: 80% !important;
       }
 
-      .carousel-prev { left: -14px !important; width: 32px; height: 32px; font-size: 1rem; }
-      .carousel-next { right: -14px !important; width: 32px; height: 32px; font-size: 1rem; }
+      .carousel-prev { left: -10px !important; width: 32px; height: 32px; font-size: 1rem; }
+      .carousel-next { right: -10px !important; width: 32px; height: 32px; font-size: 1rem; }
 
-      .expanding-tile-clone.project-tight-arrows .carousel-prev { left: -14px !important; }
-      .expanding-tile-clone.project-tight-arrows .carousel-next { right: -14px !important; }
+      .expanding-tile-clone.project-tight-arrows .carousel-prev { left: -10px !important; }
+      .expanding-tile-clone.project-tight-arrows .carousel-next { right: -10px !important; }
 
-      .expanding-tile-clone.project-stickers-arrows .carousel-prev { left: -14px !important; }
-      .expanding-tile-clone.project-stickers-arrows .carousel-next { right: -14px !important; }
+      .expanding-tile-clone.project-stickers-arrows .carousel-prev { left: -10px !important; }
+      .expanding-tile-clone.project-stickers-arrows .carousel-next { right: -10px !important; }
 
       .carousel-dots {
         position: static;
@@ -1342,7 +1380,7 @@
       }
 
       .mobile-card-header .m-num {
-        font-size: 0.68rem;
+        font-size: 0.65rem;
         font-weight: 800;
         letter-spacing: 0.16em;
         opacity: 0.7;
@@ -1350,7 +1388,7 @@
       }
 
       .mobile-card-header .m-title {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         font-weight: 900;
         line-height: 1.15;
         display: flex;
@@ -1360,7 +1398,7 @@
       }
 
       .mobile-card-header .m-title .title-secondary {
-        font-size: 1.15rem;
+        font-size: 1.05rem;
         text-align: center;
         align-self: center;
       }
@@ -1371,30 +1409,30 @@
         align-items: center;
         text-align: center;
         width: 100%;
-        gap: 6px;
+        gap: 4px;
       }
 
       .mobile-card-footer p {
-        font-size: 0.85rem;
-        line-height: 1.35;
+        font-size: 0.78rem;
+        line-height: 1.3;
         opacity: 0.9;
         max-width: 90%;
       }
 
       .mobile-card-footer .m-link {
-        font-size: 0.82rem;
+        font-size: 0.76rem;
         color: var(--accent-color);
         font-weight: 700;
         text-decoration: underline;
-        margin-top: 4px;
+        margin-top: 2px;
       }
 
       .floating-home-btn {
-        bottom: 5.6vh !important;
+        bottom: max(5.5dvh, calc(env(safe-area-inset-bottom, 0px) + 20px)) !important;
       }
 
       .grid-return-btn {
-        bottom: 5.6vh !important;
+        bottom: max(5.5dvh, calc(env(safe-area-inset-bottom, 0px) + 20px)) !important;
         left: var(--left-margin) !important;
       }
 
@@ -1537,7 +1575,7 @@
           </div>
 
           <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
-            <video src="./paintings/cancel.mov" class="tile-thumb-video" preload="auto" muted playsinline></video>
+            <video src="./paintings/cancel.mov#t=0.1" class="tile-thumb-video" preload="auto" muted playsinline></video>
           </div>
 
           <div class="grid-square-tile" data-proj-index="7" onclick="openProjectByIndex(7, this)">
@@ -1574,7 +1612,7 @@
 
       </div>
 
-      <!-- HOME CENTER (SVG ON DESKTOP/TABLET + PNG ON MOBILE) -->
+      <!-- HOME CENTER (SVG FOR DESKTOP, PHONEBG.PNG FOR MOBILE) -->
       <div class="river-artwork-wrapper" id="homeArtwork">
         <div class="desktop-svg-container" id="desktopSvgContainer"></div>
         <img src="./phonebg.png" class="mobile-home-img" id="mobileHomeImg" alt="Home Artwork Mobile" onerror="this.src='./paintings/phonebg.png';">
@@ -1858,7 +1896,7 @@
         } else {
           const vid = tile.querySelector('video');
           if (vid) {
-            vid.currentTime = 29;
+            if (vid.src.includes('10ago.mp4')) vid.currentTime = 29;
             vid.play().catch(() => {});
           }
         }
@@ -1871,7 +1909,7 @@
         const isVid = initialSrc.endsWith('.mp4') || initialSrc.endsWith('.MOV') || initialSrc.endsWith('.mov');
 
         if (isVid) {
-          tile.innerHTML = `<video src="${initialSrc}#t=29" class="tile-thumb-video" preload="auto" muted playsinline></video>`;
+          tile.innerHTML = `<video src="${initialSrc}#t=0.1" class="tile-thumb-video" preload="auto" muted playsinline></video>`;
         } else {
           tile.innerHTML = `<img src="${initialSrc}" class="tile-thumb-img" alt="Preview">`;
         }
@@ -2094,7 +2132,7 @@
       initialOffset = homeArtwork.offsetLeft;
       
       const isMobile = window.innerWidth <= 768;
-      const leftMarginPx = window.innerWidth * (isMobile ? 0.06 : 0.068);
+      const leftMarginPx = window.innerWidth * (isMobile ? 0.055 : 0.068);
 
       const gridCenter = designGridWrapper.offsetLeft + (designGridWrapper.offsetWidth / 2);
       maxLeftShift = initialOffset - gridCenter + (window.innerWidth / 2) - leftMarginPx;
@@ -2105,11 +2143,6 @@
       renderTrack();
     }
 
-    /* =======================================================
-       SCROLL & WHEEL DIRECTION:
-       - Scroll Down (deltaY > 0) -> Move Right towards Paintings (targetVirtualPos increases)
-       - Scroll Up (deltaY < 0) -> Move Left towards Design Grid (targetVirtualPos decreases)
-    ======================================================= */
     window.addEventListener("wheel", function(e) {
       if (isExpanded) return;
 
@@ -2117,7 +2150,7 @@
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         scrollDelta = e.deltaX; 
       } else {
-        scrollDelta = e.deltaY; // Down > 0 (Paintings), Up < 0 (Grid)
+        scrollDelta = e.deltaY;
       }
 
       targetVirtualPos += scrollDelta * 1.5;
@@ -2149,13 +2182,11 @@
       touchStartX = currentX;
       touchStartY = currentY;
 
-      // Scrolling Down on mobile (finger swipes UP, deltaY < 0) -> moves right towards paintings
-      // Scrolling Up on mobile (finger swipes DOWN, deltaY > 0) -> moves left towards grid
       let swipeDelta = 0;
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         swipeDelta = -deltaX;
       } else {
-        swipeDelta = -deltaY; // Swipe up moves right (Paintings), Swipe down moves left (Grid)
+        swipeDelta = -deltaY;
       }
 
       targetVirtualPos += swipeDelta * 1.8;
