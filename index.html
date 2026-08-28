@@ -392,6 +392,58 @@
       left: var(--left-margin);
     }
 
+    /* GRID RETURN ICON BUTTON */
+    .grid-return-btn {
+      position: fixed;
+      bottom: 6vh;
+      left: var(--left-margin);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1.5px solid var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      z-index: 65;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+      transition: opacity 0.35s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+    }
+
+    .grid-return-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .grid-return-btn:hover {
+      transform: scale(1.08);
+      background: var(--accent-color);
+    }
+
+    .grid-return-btn:hover .grid-icon-svg rect {
+      fill: var(--bg-color);
+    }
+
+    .grid-return-btn:active {
+      transform: scale(0.94);
+    }
+
+    .grid-icon-svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .grid-icon-svg rect {
+      fill: var(--accent-color);
+      transition: fill 0.2s ease;
+    }
+
 
     /* =========================
        FOOTER LEFT (DESKTOP)
@@ -803,6 +855,11 @@
       max-height: 82% !important;
     }
 
+    .clone-media-wrapper img.media-stickers-scale {
+      max-width: 86% !important;
+      max-height: 86% !important;
+    }
+
     .clone-media-wrapper video.video-clean-frame {
       border: none !important;
       outline: none !important;
@@ -840,11 +897,12 @@
     .carousel-prev { left: -26px; }
     .carousel-next { right: -26px; }
 
-    .expanding-tile-clone.project-tight-arrows .carousel-prev { left: 8px !important; }
-    .expanding-tile-clone.project-tight-arrows .carousel-next { right: 8px !important; }
+    /* Define Your Bully - tight frame arrows */
+    .expanding-tile-clone.project-tight-arrows .carousel-prev { left: 16% !important; }
+    .expanding-tile-clone.project-tight-arrows .carousel-next { right: 16% !important; }
 
-    .expanding-tile-clone.project-stickers-arrows .carousel-prev { left: -32px !important; }
-    .expanding-tile-clone.project-stickers-arrows .carousel-next { right: -32px !important; }
+    .expanding-tile-clone.project-stickers-arrows .carousel-prev { left: -26px !important; }
+    .expanding-tile-clone.project-stickers-arrows .carousel-next { right: -26px !important; }
 
     .carousel-dots {
       position: absolute;
@@ -905,7 +963,7 @@
       letter-spacing: 0.18em;
       opacity: 0.65;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .expanded-desc-panel h2 {
@@ -913,14 +971,34 @@
       font-weight: 900;
       line-height: 1.1;
       letter-spacing: -0.01em;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      text-align: left;
+    }
+
+    .title-primary {
+      display: block;
+      text-align: left;
+    }
+
+    .title-secondary {
+      display: block;
+      font-size: 2.05rem;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      text-align: left;
+      align-self: flex-start;
     }
 
     .expanded-desc-panel p {
       font-size: 1rem;
-      line-height: 1.55;
+      line-height: 1.5;
       opacity: 0.85;
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
 
     .project-link-btn {
@@ -928,37 +1006,12 @@
       color: var(--accent-color);
       text-decoration: underline;
       font-weight: 600;
-      margin-top: 14px;
-      margin-bottom: 20px;
+      margin-top: 10px;
       transition: opacity 0.2s ease;
     }
 
     .project-link-btn:hover {
       opacity: 0.75;
-    }
-
-    .desc-back-btn {
-      align-self: flex-start;
-      background: transparent;
-      border: 1.5px solid var(--accent-color);
-      color: var(--accent-color);
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    }
-
-    .desc-back-btn:hover {
-      background: var(--accent-color);
-      color: var(--bg-color);
-      transform: translateX(-3px);
     }
 
 
@@ -1254,8 +1307,19 @@
         margin: 0;
       }
 
+      .clone-media-wrapper img.media-stickers-scale {
+        max-width: 80% !important;
+        max-height: 80% !important;
+      }
+
       .carousel-prev { left: -14px !important; width: 32px; height: 32px; font-size: 1rem; }
       .carousel-next { right: -14px !important; width: 32px; height: 32px; font-size: 1rem; }
+
+      .expanding-tile-clone.project-tight-arrows .carousel-prev { left: -14px !important; }
+      .expanding-tile-clone.project-tight-arrows .carousel-next { right: -14px !important; }
+
+      .expanding-tile-clone.project-stickers-arrows .carousel-prev { left: -14px !important; }
+      .expanding-tile-clone.project-stickers-arrows .carousel-next { right: -14px !important; }
 
       .carousel-dots {
         position: static;
@@ -1289,6 +1353,16 @@
         font-size: 1.25rem;
         font-weight: 900;
         line-height: 1.15;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+      }
+
+      .mobile-card-header .m-title .title-secondary {
+        font-size: 1.15rem;
+        text-align: center;
+        align-self: center;
       }
 
       .mobile-card-footer {
@@ -1317,6 +1391,11 @@
 
       .floating-home-btn {
         bottom: 5.6vh !important;
+      }
+
+      .grid-return-btn {
+        bottom: 5.6vh !important;
+        left: var(--left-margin) !important;
       }
 
       .floating-home-left {
@@ -1409,6 +1488,21 @@
       →
     </button>
 
+    <!-- FLOATING GRID RETURN ICON BUTTON -->
+    <button class="grid-return-btn" id="returnToGridBtn" onclick="collapseTile()" aria-label="Back to Grid" title="Back to grid">
+      <svg class="grid-icon-svg" viewBox="0 0 18 18">
+        <rect x="1" y="1" width="4" height="4" rx="1"></rect>
+        <rect x="7" y="1" width="4" height="4" rx="1"></rect>
+        <rect x="13" y="1" width="4" height="4" rx="1"></rect>
+        <rect x="1" y="7" width="4" height="4" rx="1"></rect>
+        <rect x="7" y="7" width="4" height="4" rx="1"></rect>
+        <rect x="13" y="7" width="4" height="4" rx="1"></rect>
+        <rect x="1" y="13" width="4" height="4" rx="1"></rect>
+        <rect x="7" y="13" width="4" height="4" rx="1"></rect>
+        <rect x="13" y="13" width="4" height="4" rx="1"></rect>
+      </svg>
+    </button>
+
 
     <!-- GALLERY TRACK -->
     <main class="gallery-track" id="galleryTrack">
@@ -1419,15 +1513,15 @@
         <div class="design-grid-3x3" id="designGrid">
           
           <div class="grid-square-tile" data-proj-index="0" onclick="openProjectByIndex(0, this)">
-            <img src="./paintings/websb.png" class="tile-thumb-img" alt="Lost Items">
+            <img src="./paintings/gs3.png" class="tile-thumb-img" alt="Two Pyromaniac Neighbors">
           </div>
 
           <div class="grid-square-tile" data-proj-index="1" onclick="openProjectByIndex(1, this)">
-            <img src="./paintings/pk2.png" class="tile-thumb-img" alt="Koresh Poster">
+            <img src="./paintings/pk2.png" class="tile-thumb-img" alt="Koresh Building Poster">
           </div>
 
           <div class="grid-square-tile" data-proj-index="2" onclick="openProjectByIndex(2, this)">
-            <img src="./paintings/s2.png" class="tile-thumb-img" alt="Forgotten Messages">
+            <img src="./paintings/s1.png" class="tile-thumb-img" alt="Forgotten Messages">
           </div>
 
           <div class="grid-square-tile" data-proj-index="3" onclick="openProjectByIndex(3, this)">
@@ -1439,7 +1533,7 @@
           </div>
 
           <div class="grid-square-tile" data-proj-index="5" onclick="openProjectByIndex(5, this)">
-            <img src="./paintings/gs3.png" class="tile-thumb-img" alt="Two Pyromaniac Neighbors">
+            <img src="./paintings/websb.png" class="tile-thumb-img" alt="Lost Items">
           </div>
 
           <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
@@ -1476,7 +1570,6 @@
           <div id="descBody">
             <p id="descText">Project description text will appear here.</p>
           </div>
-          <button class="desc-back-btn" onclick="collapseTile()">← Back to grid</button>
         </div>
 
       </div>
@@ -1537,12 +1630,6 @@
       </div>
 
     </main>
-
-    <!-- MOBILE FIXED BACK BUTTON -->
-    <button class="floating-home-btn mobile-fixed-back-btn" id="mobileFixedBackBtn" onclick="collapseTile()" aria-label="Back">
-      ←
-    </button>
-
 
     <!-- SCALE SLIDER -->
     <div class="zoom-control-container" id="zoomControl">
@@ -1632,6 +1719,7 @@
     const sideNavRight = document.getElementById("sideNavRight");
     const returnFromPaintings = document.getElementById("returnFromPaintings");
     const returnFromDesign = document.getElementById("returnFromDesign");
+    const returnToGridBtn = document.getElementById("returnToGridBtn");
     
     const heroTitle = document.getElementById("heroTitle");
     const heroTitleContent = document.getElementById("heroTitleContent");
@@ -1640,7 +1728,6 @@
     const themeToggle = document.getElementById("themeToggle");
     const zoomControl = document.getElementById("zoomControl");
     const zoomSlider = document.getElementById("zoomSlider");
-    const mobileFixedBackBtn = document.getElementById("mobileFixedBackBtn");
 
     const designGrid = document.getElementById("designGrid");
     const tiles = document.querySelectorAll(".grid-square-tile");
@@ -1671,63 +1758,79 @@
     const projectsData = [
       {
         num: "01",
-        title: "Lost Items",
-        desc: "An introduction to the personality of my room through items I have lost.",
-        link: "https://searonen.github.io/missingitems/",
-        items: ["./paintings/websb.png"]
+        titleEn: "Two Pyromaniac Neighbors",
+        titleHe: null,
+        desc: "An interactive game built with Makey Makey. Two neighbors discover their superpowers are real and must protect their houses before their parents return.",
+        items: ["./paintings/gs3.png", "./paintings/gs2.mov", "./paintings/gs1.png"]
       },
       {
         num: "02",
-        title: "Koresh Building Poster",
+        titleEn: "Koresh Building Poster",
+        titleHe: null,
         desc: "Drafts and final submissions for a poster design assignment created as part of the B.Des in Visual Communication.",
         items: ["./paintings/pk2.png", "./paintings/pk3.png", "./paintings/pk1.png", "./paintings/pk4.png"]
       },
       {
         num: "03",
-        title: "Forgotten Messages (מסרים שכוחים)",
+        titleEn: "Forgotten Messages",
+        titleHe: "מסרים שחוקים",
         desc: "A collection of stickers found scratched and weathered on the streets, exploring their visual deconstruction and reconstruction.",
-        items: ["./paintings/s2.png", "./paintings/s3.png", "./paintings/s4.png", "./paintings/s5.png"]
+        items: ["./paintings/s1.png", "./paintings/s2.png", "./paintings/s3.png", "./paintings/s4.png", "./paintings/s5.png"]
       },
       {
         num: "04",
-        title: "The Lovers",
+        titleEn: "The Lovers",
+        titleHe: null,
         desc: "An homage to the iconic surrealist masterpiece \"The Lovers\" (Les Amants, 1928) by René Magritte.",
         items: ["./paintings/thelovers.png"]
       },
       {
         num: "05",
-        title: "10 Agorot",
+        titleEn: "Some Change",
+        titleHe: null,
         desc: "A reflective retrospective on a transformative personal experience in Jaffa.",
         items: ["./paintings/10ago.mp4"]
       },
       {
         num: "06",
-        title: "Two Pyromaniac Neighbors",
-        desc: "An interactive game built with Makey Makey. Two neighbors discover their superpowers are real and must protect their houses before their parents return.",
-        items: ["./paintings/gs3.png", "./paintings/gs2.mov", "./paintings/gs1.png"]
+        titleEn: "Lost Items",
+        titleHe: "דברים שניתן לאבד",
+        desc: "An introduction to the personality of my room through items I have lost.",
+        link: "https://searonen.github.io/missingitems/",
+        items: ["./paintings/websb.png"]
       },
       {
         num: "07",
-        title: "Cancel & Delete Behavior",
+        titleEn: "Cancel & Delete Behavior",
+        titleHe: null,
         desc: "A Visual Communication academic assignment exploring kinetic character and behavior for cancellation and deletion buttons.",
         items: ["./paintings/cancel.mov"]
       },
       {
         num: "08",
-        title: "Comic Postcard Series",
+        titleEn: "Comic Postcard Series",
+        titleHe: null,
         desc: "A curated series of narrative comic postcards and illustrated panels.",
         items: ["./paintings/cm2.jpg", "./paintings/cm1.jpg", "./paintings/cm3.JPG"]
       },
       {
         num: "09",
-        title: "Define Your Bully",
-        desc: "A B.Des Visual Communication interaction design project: an app created to characterize and identify your personal bully.",
+        titleEn: "Define Your Bully",
+        titleHe: null,
+        desc: "A B.Des in Visual Communication interaction design project inspired by the movie Mean Girls: an app created to characterize and identify your personal bully.",
         items: ["./paintings/mg1.PNG", "./paintings/mg2.PNG", "./paintings/mg4.PNG", "./paintings/mg6.PNG"]
       }
     ];
 
     let currentProjectIndex = 0;
     let currentSlideIndex = 0;
+
+    function getFormattedTitleHtml(proj) {
+      if (proj.titleHe) {
+        return `<span class="title-primary">${proj.titleEn}</span><span class="title-secondary">${proj.titleHe}</span>`;
+      }
+      return `<span class="title-primary">${proj.titleEn}</span>`;
+    }
 
     /* =================================
        INTERACTIVE HOVER PREVIEWS
@@ -1804,10 +1907,12 @@
       } else {
         const img = document.createElement('img');
         img.src = currentSrc;
-        img.alt = proj.title;
+        img.alt = proj.titleEn;
 
-        if (currentProjectIndex === 5 && currentSlideIndex === 0) {
+        if (currentProjectIndex === 0 && currentSlideIndex === 0) {
           img.classList.add('media-scaled-down');
+        } else if (currentProjectIndex === 2) {
+          img.classList.add('media-stickers-scale');
         }
 
         cloneMediaWrapper.appendChild(img);
@@ -1888,11 +1993,12 @@
       if (isMobile) {
         mobileCardHeader.style.display = 'flex';
         mobileCardFooter.style.display = 'flex';
-        mobileFixedBackBtn.style.display = 'flex';
+        returnToGridBtn.classList.add("visible");
+        returnFromDesign.classList.add("visible");
         
         mobileCardHeader.innerHTML = `
           <span class="m-num">${proj.num} / SELECTED WORK</span>
-          <h3 class="m-title">${proj.title}</h3>
+          <h3 class="m-title">${getFormattedTitleHtml(proj)}</h3>
         `;
 
         let footerHtml = `<p>${proj.desc}</p>`;
@@ -1905,7 +2011,6 @@
       } else {
         mobileCardHeader.style.display = 'none';
         mobileCardFooter.style.display = 'none';
-        mobileFixedBackBtn.style.display = 'none';
 
         const targetHeight = Math.min(window.innerHeight * 0.54, 480);
         const targetWidth = targetHeight;
@@ -1913,7 +2018,7 @@
         const targetLeft = wrapperRect.width - targetWidth - 20;
 
         descNum.textContent = proj.num + " / SELECTED WORK";
-        descTitle.textContent = proj.title;
+        descTitle.innerHTML = getFormattedTitleHtml(proj);
         
         let bodyHtml = `<p>${proj.desc}</p>`;
         if (proj.link) {
@@ -1929,6 +2034,8 @@
           expandingClone.style.height = `${targetHeight}px`;
 
           descPanel.classList.add("active");
+          returnToGridBtn.classList.add("visible");
+          returnFromDesign.classList.add("visible");
         });
       }
     }
@@ -1937,7 +2044,7 @@
       if (!isExpanded || !activeTile) return;
 
       descPanel.classList.remove("active");
-      mobileFixedBackBtn.style.display = 'none';
+      returnToGridBtn.classList.remove("visible");
 
       const vid = cloneMediaWrapper.querySelector('video');
       if (vid) vid.pause();
@@ -1965,12 +2072,16 @@
         tiles.forEach(t => t.classList.remove("dimmed-tile"));
         activeTile = null;
         isExpanded = false;
+
+        if (currentVirtualPos < -250) {
+          returnFromDesign.classList.add("visible");
+        }
       }, 360);
     }
 
     /* =======================================================
        UNIVERSAL DUAL-SCROLL ENGINE
-    ======================================================= */
+    ====================================================== */
 
     let currentVirtualPos = 0;
     let targetVirtualPos = 0;
@@ -1994,14 +2105,19 @@
       renderTrack();
     }
 
+    /* =======================================================
+       SCROLL & WHEEL DIRECTION:
+       - Scroll Down (deltaY > 0) -> Move Right towards Paintings (targetVirtualPos increases)
+       - Scroll Up (deltaY < 0) -> Move Left towards Design Grid (targetVirtualPos decreases)
+    ======================================================= */
     window.addEventListener("wheel", function(e) {
       if (isExpanded) return;
 
       let scrollDelta = 0;
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-        scrollDelta = e.deltaX;
+        scrollDelta = e.deltaX; 
       } else {
-        scrollDelta = e.deltaY;
+        scrollDelta = e.deltaY; // Down > 0 (Paintings), Up < 0 (Grid)
       }
 
       targetVirtualPos += scrollDelta * 1.5;
@@ -2033,7 +2149,14 @@
       touchStartX = currentX;
       touchStartY = currentY;
 
-      const swipeDelta = Math.abs(deltaX) > Math.abs(deltaY) ? -deltaX : deltaY;
+      // Scrolling Down on mobile (finger swipes UP, deltaY < 0) -> moves right towards paintings
+      // Scrolling Up on mobile (finger swipes DOWN, deltaY > 0) -> moves left towards grid
+      let swipeDelta = 0;
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        swipeDelta = -deltaX;
+      } else {
+        swipeDelta = -deltaY; // Swipe up moves right (Paintings), Swipe down moves left (Grid)
+      }
 
       targetVirtualPos += swipeDelta * 1.8;
       targetVirtualPos = Math.max(-maxLeftShift, Math.min(maxRightShift, targetVirtualPos));
@@ -2091,7 +2214,7 @@
         returnFromPaintings.classList.remove("visible");
       }
 
-      if (currentVirtualPos < -250) {
+      if (currentVirtualPos < -250 || isExpanded) {
         returnFromDesign.classList.add("visible");
       } else {
         returnFromDesign.classList.remove("visible");
@@ -2232,7 +2355,8 @@
         !event.target.closest(".grid-square-tile") &&
         !event.target.closest(".expanding-tile-clone") &&
         !event.target.closest(".expanded-desc-panel") &&
-        !event.target.closest(".mobile-fixed-back-btn")
+        !event.target.closest("#returnToGridBtn") &&
+        !event.target.closest("#returnFromDesign")
       ) {
         collapseTile();
         return;
@@ -2249,9 +2373,9 @@
         !event.target.closest(".grid-square-tile") &&
         !event.target.closest(".expanding-tile-clone") &&
         !event.target.closest(".expanded-desc-panel") &&
+        !event.target.closest("#returnToGridBtn") &&
         !event.target.closest(".side-nav-anchor") &&
-        !event.target.closest(".floating-home-btn") &&
-        !event.target.closest(".mobile-fixed-back-btn")
+        !event.target.closest(".floating-home-btn")
       ) {
         resetToHome();
       }
