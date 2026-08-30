@@ -126,7 +126,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6px;
+      padding: 0;
       
       cursor: pointer;
       outline: none;
@@ -142,8 +142,8 @@
     }
 
     .theme-icon-box {
-      width: 24px;
-      height: 24px;
+      width: 50%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -164,13 +164,14 @@
 
     .toggle-thumb {
       position: absolute;
-      top: 3px;
-      left: 4px;
+      top: 50%;
+      left: 25%;
+      transform: translate(-50%, -50%);
       width: 28px;
       height: 28px;
       border-radius: 50%;
       background: var(--accent-color);
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s ease;
+      transition: left 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s ease;
       z-index: 1;
     }
 
@@ -179,7 +180,8 @@
     }
 
     body.light-mode .toggle-thumb {
-      transform: translateX(34px);
+      left: 75%;
+      transform: translate(-50%, -50%);
     }
 
     body.light-mode .icon-sun-box .icon-svg {
@@ -234,7 +236,7 @@
     }
 
     .hero-title-content .line-original {
-      font-size: 1.85rem;
+      font-size: 2.4rem;
       font-weight: 800;
       letter-spacing: 0.02em;
     }
@@ -554,7 +556,7 @@
       height: 76dvh;
       display: flex;
       align-items: center;
-      gap: 6vw;
+      gap: 2.4vw;
       z-index: 5;
       will-change: transform;
       opacity: 0;
@@ -669,12 +671,12 @@
     }
 
 
-    /* =========================
-       PAINTINGS
-    ========================= */
+    /* =========================================
+       PAINTINGS & BLUR-UP PROGRESSIVE LOADING
+    ========================================= */
 
     .first-painting-node {
-      margin-left: 22vw;
+      margin-left: 20vw;
     }
 
     .gallery-item {
@@ -687,10 +689,27 @@
       flex-shrink: 0;
       border-radius: 4px;
       cursor: pointer;
-      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      background: rgba(255, 255, 255, 0.04);
+      
+      /* Smooth Progressive Blur Transition */
+      filter: blur(14px);
+      opacity: 0.35;
+      transform: scale(0.98);
+      transition: 
+        filter 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: filter, opacity, transform;
     }
 
-    .gallery-item:hover {
+    .gallery-item.loaded {
+      filter: blur(0);
+      opacity: 1;
+      transform: scale(1);
+      background: transparent !important;
+    }
+
+    .gallery-item.loaded:hover {
       transform: scale(1.03);
     }
 
@@ -812,6 +831,17 @@
       pointer-events: none;
       display: block;
       background: transparent;
+      transition: filter 0.5s ease, opacity 0.5s ease;
+    }
+
+    .tile-thumb-img:not(.loaded) {
+      filter: blur(8px);
+      opacity: 0.5;
+    }
+
+    .tile-thumb-img.loaded {
+      filter: blur(0);
+      opacity: 1;
     }
 
 
@@ -879,6 +909,44 @@
       border: none !important;
       outline: none !important;
       background: transparent !important;
+    }
+
+    /* CUSTOM VIDEO PLAY BUTTON OVERLAY */
+    .video-play-overlay-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 2px solid var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 35;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .video-play-overlay-btn:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: var(--accent-color);
+    }
+
+    .video-play-overlay-btn svg {
+      width: 26px;
+      height: 26px;
+      fill: var(--accent-color);
+      margin-left: 4px;
+      transition: fill 0.2s ease;
+    }
+
+    .video-play-overlay-btn:hover svg {
+      fill: var(--bg-color);
     }
 
     .carousel-nav-btn {
@@ -1117,7 +1185,7 @@
       }
 
       .first-painting-node {
-        margin-left: 26vw;
+        margin-left: 0vw !important;
       }
 
       .theme-toggle-btn {
@@ -1125,11 +1193,12 @@
         top: max(3.5dvh, env(safe-area-inset-top, 16px));
         width: 56px;
         height: 30px;
+        padding: 0;
       }
 
       .theme-toggle-btn .theme-icon-box {
-        width: 20px;
-        height: 20px;
+        width: 50%;
+        height: 100%;
       }
 
       .theme-toggle-btn .icon-svg {
@@ -1140,10 +1209,14 @@
       .toggle-thumb {
         width: 22px;
         height: 22px;
+        left: 25%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
 
       body.light-mode .toggle-thumb {
-        transform: translateX(26px);
+        left: 75%;
+        transform: translate(-50%, -50%);
       }
 
       .hero-title-container {
@@ -1200,15 +1273,19 @@
         display: none !important;
       }
 
-      /* Balanced positioning: slightly lowered to relieve header crowding, balanced gap from bottom */
+      /* Compact and continuous mobile gallery track */
+      .gallery-track {
+        left: 0 !important;
+        gap: 14px !important;
+      }
+
       .river-artwork-wrapper {
         height: 48dvh !important;
-        width: calc(100vw - 64px) !important;
-        max-width: calc(100vw - 64px) !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin: 0 auto !important;
-        transform: translate(6px, 12px) !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        flex-shrink: 0 !important;
+        margin: 0 !important;
+        transform: translateY(12px) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -1217,7 +1294,7 @@
       .mobile-home-img {
         display: block !important;
         height: 100% !important;
-        width: 100% !important;
+        width: auto !important;
         max-height: 48dvh !important;
         max-width: calc(100vw - 64px) !important;
         object-fit: contain !important;
@@ -1226,42 +1303,43 @@
         pointer-events: none !important;
       }
 
-      /* Compact, balanced footer spacing */
+      /* Compact, balanced footer spacing (Lowered and sized to keep single line keepsakes) */
       .hero-footer {
         left: var(--left-margin);
         right: var(--right-margin);
-        bottom: max(3.5dvh, calc(env(safe-area-inset-bottom, 0px) + 14px)) !important;
+        bottom: max(2.2dvh, calc(env(safe-area-inset-bottom, 0px) + 8px)) !important;
         width: calc(100vw - (var(--left-margin) * 2));
       }
 
       .info-block {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 7px;
         width: 100%;
       }
 
       .info-block .school {
-        font-size: 0.92rem !important;
+        font-size: 0.84rem !important;
         font-weight: 700;
         margin-bottom: 0;
-        line-height: 1.3;
+        line-height: 1.25;
       }
 
       .info-block .commissions {
         display: block !important;
-        font-size: 0.82rem !important;
-        line-height: 1.35;
+        font-size: 0.72rem !important;
+        line-height: 1.4;
         opacity: 0.92;
+        white-space: nowrap;
       }
 
       .mobile-only-contact {
         display: block !important;
         position: static !important;
         text-align: left !important;
-        margin-top: 6px;
+        margin-top: 10px;
         border-top: 1.2px solid var(--accent-dim);
-        padding-top: 6px;
+        padding-top: 5px;
         width: 100%;
       }
 
@@ -1283,28 +1361,35 @@
       }
 
       .contact-item {
-        font-size: 0.82rem !important;
-        gap: 6px !important;
+        font-size: 0.74rem !important;
+        gap: 5px !important;
       }
 
       .contact-icon {
-        width: 15px !important;
-        height: 15px !important;
+        width: 13px !important;
+        height: 13px !important;
       }
 
       .desktop-contact-block {
         display: none !important;
       }
 
-      .gallery-track {
-        left: var(--left-margin);
-        gap: 8vw;
+      /* Standard Mobile Gallery Paintings */
+      .gallery-item {
+        height: 52dvh !important;
+        max-height: 52dvh !important;
+        max-width: calc(100vw - 52px) !important;
+        width: auto !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
       }
 
-      .gallery-item {
-        height: 58dvh !important;
-        max-height: 58dvh !important;
-        max-width: 88vw !important;
+      /* Specific Wide Composite Painting on Mobile */
+      .gallery-item.wide-artwork {
+        height: auto !important;
+        max-height: 48dvh !important;
+        max-width: calc(100vw - 28px) !important;
+        width: calc(100vw - 28px) !important;
       }
 
       .gallery-end-card {
@@ -1313,15 +1398,24 @@
         width: 82vw !important;
       }
 
+      /* Mobile Design Grid Centering */
       .design-grid-wrapper {
-        margin-right: 8vw;
-        width: 88vw;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
         height: 68dvh;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
       }
 
       .design-grid-3x3 {
         height: 48dvh;
-        width: 86vw;
+        width: calc(100vw - 48px) !important;
+        max-width: 320px !important;
+        margin: auto !important;
         gap: 12px;
       }
 
@@ -1579,7 +1673,7 @@
           </div>
 
           <div class="grid-square-tile" data-proj-index="6" onclick="openProjectByIndex(6, this)">
-            <video src="./paintings/cancel.mov#t=0.1" class="tile-thumb-video" preload="auto" muted playsinline></video>
+            <video src="./paintings/cancel.mov#t=0.1" class="tile-thumb-video" preload="metadata" muted playsinline></video>
           </div>
 
           <div class="grid-square-tile" data-proj-index="7" onclick="openProjectByIndex(7, this)">
@@ -1631,26 +1725,26 @@
       </div>
 
       <!-- RIGHT SIDE: PAINTINGS & END FRAME CARD -->
-      <img src="./paintings/2.jpeg" class="gallery-item first-painting-node" id="firstPainting" alt="Artwork 2">
-      <img src="./paintings/29.jpeg" class="gallery-item" alt="Artwork 29">
-      <img src="./paintings/18.jpeg" class="gallery-item" alt="Artwork 18">
-      <img src="./paintings/3.jpeg" class="gallery-item" alt="Artwork 3">
-      <img src="./paintings/15.jpeg" class="gallery-item" alt="Artwork 15">
-      <img src="./paintings/5.jpeg" class="gallery-item" alt="Artwork 5">
-      <img src="./paintings/11.jpeg" class="gallery-item" alt="Artwork 11">
-      <img src="./paintings/8.jpeg" class="gallery-item" alt="Artwork 8">
-      <img src="./paintings/12.jpeg" class="gallery-item" alt="Artwork 12">
-      <img src="./paintings/13.jpeg" class="gallery-item" alt="Artwork 13">
-      <img src="./paintings/4.jpeg" class="gallery-item" alt="Artwork 4">
-      <img src="./paintings/19.jpeg" class="gallery-item" alt="Artwork 19">
-      <img src="./paintings/1.jpeg" class="gallery-item" alt="Artwork 1">
-      <img src="./paintings/22.jpeg" class="gallery-item" alt="Artwork 22">
-      <img src="./paintings/24.jpeg" class="gallery-item" alt="Artwork 24">
-      <img src="./paintings/25.jpeg" class="gallery-item" alt="Artwork 25">
-      <img src="./paintings/14.jpeg" class="gallery-item" alt="Artwork 14">
-      <img src="./paintings/30.jpeg" class="gallery-item" alt="Artwork 30">
-      <img src="./paintings/17.jpeg" class="gallery-item" alt="Artwork 17">
-      <img src="./paintings/21.jpeg" class="gallery-item" alt="Artwork 21">
+      <img src="./paintings/2.jpeg" class="gallery-item first-painting-node" id="firstPainting" alt="Artwork 2" loading="eager" decoding="async">
+      <img src="./paintings/29.jpeg" class="gallery-item" alt="Artwork 29" loading="eager" decoding="async">
+      <img src="./paintings/18.jpeg" class="gallery-item" alt="Artwork 18" loading="eager" decoding="async">
+      <img src="./paintings/3.jpeg" class="gallery-item" alt="Artwork 3" loading="eager" decoding="async">
+      <img src="./paintings/15.jpeg" class="gallery-item wide-artwork" alt="Artwork 15" loading="eager" decoding="async">
+      <img src="./paintings/5.jpeg" class="gallery-item" alt="Artwork 5" loading="eager" decoding="async">
+      <img src="./paintings/11.jpeg" class="gallery-item" alt="Artwork 11" loading="eager" decoding="async">
+      <img src="./paintings/8.jpeg" class="gallery-item" alt="Artwork 8" loading="eager" decoding="async">
+      <img src="./paintings/12.jpeg" class="gallery-item" alt="Artwork 12" loading="eager" decoding="async">
+      <img src="./paintings/13.jpeg" class="gallery-item" alt="Artwork 13" loading="eager" decoding="async">
+      <img src="./paintings/4.jpeg" class="gallery-item" alt="Artwork 4" loading="eager" decoding="async">
+      <img src="./paintings/19.jpeg" class="gallery-item" alt="Artwork 19" loading="eager" decoding="async">
+      <img src="./paintings/1.jpeg" class="gallery-item" alt="Artwork 1" loading="eager" decoding="async">
+      <img src="./paintings/22.jpeg" class="gallery-item" alt="Artwork 22" loading="eager" decoding="async">
+      <img src="./paintings/24.jpeg" class="gallery-item" alt="Artwork 24" loading="eager" decoding="async">
+      <img src="./paintings/25.jpeg" class="gallery-item" alt="Artwork 25" loading="eager" decoding="async">
+      <img src="./paintings/14.jpeg" class="gallery-item" alt="Artwork 14" loading="eager" decoding="async">
+      <img src="./paintings/30.jpeg" class="gallery-item" alt="Artwork 30" loading="eager" decoding="async">
+      <img src="./paintings/17.jpeg" class="gallery-item" alt="Artwork 17" loading="eager" decoding="async">
+      <img src="./paintings/21.jpeg" class="gallery-item" alt="Artwork 21" loading="eager" decoding="async">
 
       <!-- Final End Frame Card -->
       <div class="gallery-end-card" id="endCard">
@@ -1676,7 +1770,7 @@
           </a>
         </div>
 
-        <button class="back-home-btn" onclick="resetToHome()">Back to Home →</button>
+        <button class="back-home-btn" onclick="resetToHome()">← Back to Home</button>
       </div>
 
     </main>
@@ -1839,7 +1933,7 @@
         titleEn: "Some Change",
         titleHe: null,
         desc: "A reflective retrospective on a transformative personal experience in Jaffa.",
-        items: ["./paintings/10ago.mp4"]
+        items: ["./paintings/10ago.mp4#t=29"]
       },
       {
         num: "06",
@@ -1899,16 +1993,15 @@
           hoverInterval = setInterval(() => {
             hoverStep = (hoverStep + 1) % proj.items.length;
             const src = proj.items[hoverStep];
-            const isVid = src.endsWith('.mp4') || src.endsWith('.MOV') || src.endsWith('.mov');
+            const isVid = src.includes('.mp4') || src.includes('.mov') || src.includes('.MOV');
             
             tile.innerHTML = isVid
               ? `<video src="${src}" class="tile-thumb-video" autoplay loop muted playsinline></video>`
-              : `<img src="${src}" class="tile-thumb-img" alt="Preview">`;
+              : `<img src="${src}" class="tile-thumb-img loaded" alt="Preview">`;
           }, 650);
         } else {
           const vid = tile.querySelector('video');
-          if (vid) {
-            if (vid.src.includes('10ago.mp4')) vid.currentTime = 29;
+          if (vid && !vid.src.includes('10ago.mp4')) {
             vid.play().catch(() => {});
           }
         }
@@ -1918,12 +2011,13 @@
         if (hoverInterval) clearInterval(hoverInterval);
         hoverStep = 0;
         const initialSrc = proj.items[0];
-        const isVid = initialSrc.endsWith('.mp4') || initialSrc.endsWith('.MOV') || initialSrc.endsWith('.mov');
+        const isVid = initialSrc.includes('.mp4') || initialSrc.includes('.mov') || initialSrc.includes('.MOV');
 
         if (isVid) {
-          tile.innerHTML = `<video src="${initialSrc}#t=0.1" class="tile-thumb-video" preload="auto" muted playsinline></video>`;
+          const timeTag = initialSrc.includes('#t=') ? '' : '#t=0.1';
+          tile.innerHTML = `<video src="${initialSrc}${timeTag}" class="tile-thumb-video" preload="auto" muted playsinline></video>`;
         } else {
-          tile.innerHTML = `<img src="${initialSrc}" class="tile-thumb-img" alt="Preview">`;
+          tile.innerHTML = `<img src="${initialSrc}" class="tile-thumb-img loaded" alt="Preview">`;
         }
       });
     });
@@ -1941,7 +2035,7 @@
     function renderSlide() {
       const proj = projectsData[currentProjectIndex];
       const currentSrc = proj.items[currentSlideIndex];
-      const isVideo = currentSrc.endsWith('.mp4') || currentSrc.endsWith('.MOV') || currentSrc.endsWith('.mov');
+      const isVideo = currentSrc.includes('.mp4') || currentSrc.includes('.mov') || currentSrc.includes('.MOV');
 
       cloneMediaWrapper.innerHTML = '';
 
@@ -1949,11 +2043,37 @@
         const vid = document.createElement('video');
         vid.src = currentSrc;
         vid.className = 'video-clean-frame';
-        vid.autoplay = true;
+        vid.autoplay = false;
         vid.controls = true;
         vid.muted = false;
         vid.playsInline = true;
+        vid.preload = "auto";
+
+        const playBtn = document.createElement('button');
+        playBtn.className = 'video-play-overlay-btn';
+        playBtn.setAttribute('aria-label', 'Play video');
+        playBtn.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        `;
+
+        playBtn.onclick = function(e) {
+          e.stopPropagation();
+          vid.play();
+          playBtn.style.display = 'none';
+        };
+
+        vid.onplay = function() {
+          playBtn.style.display = 'none';
+        };
+
+        vid.onpause = function() {
+          playBtn.style.display = 'flex';
+        };
+
         cloneMediaWrapper.appendChild(vid);
+        cloneMediaWrapper.appendChild(playBtn);
       } else {
         const img = document.createElement('img');
         img.src = currentSrc;
@@ -2130,29 +2250,88 @@
     }
 
     /* =======================================================
-       UNIVERSAL DUAL-SCROLL ENGINE
+       UNIVERSAL DUAL-SCROLL ENGINE & GENTLE MAGNET
     ====================================================== */
 
     let currentVirtualPos = 0;
     let targetVirtualPos = 0;
     let maxLeftShift = 0;
     let maxRightShift = 0;
+    let paintingsAnchorPos = 0;
     let isAnimating = false;
+    let wheelTimeout = null;
 
     function initVirtualScrollLimits() {
       if (!homeArtwork || !designGridWrapper || !designGrid || !endCard) return;
       initialOffset = homeArtwork.offsetLeft;
       
       const isMobile = window.innerWidth <= 768;
-      const leftMarginPx = window.innerWidth * (isMobile ? 0.055 : 0.068);
+      const leftMarginPx = isMobile ? (window.innerWidth * 0.055) : (window.innerWidth * 0.068);
 
       const gridCenter = designGridWrapper.offsetLeft + (designGridWrapper.offsetWidth / 2);
-      maxLeftShift = initialOffset - gridCenter + (window.innerWidth / 2) - leftMarginPx;
+      maxLeftShift = isMobile 
+        ? (initialOffset - designGridWrapper.offsetLeft) 
+        : (initialOffset - gridCenter + (window.innerWidth / 2) - leftMarginPx);
 
-      const endCardRight = endCard.offsetLeft + endCard.offsetWidth;
-      maxRightShift = endCardRight - initialOffset - window.innerWidth + (leftMarginPx * 2);
+      if (firstPainting) {
+        paintingsAnchorPos = isMobile
+          ? (firstPainting.offsetLeft - initialOffset - ((window.innerWidth - firstPainting.offsetWidth) / 2))
+          : (firstPainting.offsetLeft - initialOffset);
+      }
+
+      // Mobile: Center the end card cleanly in the middle of the viewport
+      maxRightShift = isMobile
+        ? (endCard.offsetLeft - initialOffset - ((window.innerWidth - endCard.offsetWidth) / 2))
+        : (endCard.offsetLeft + endCard.offsetWidth - initialOffset - window.innerWidth + (leftMarginPx * 2) + 40);
+
+      maxRightShift = Math.max(0, maxRightShift);
 
       renderTrack();
+    }
+
+    /* =========================================
+       BLUR-UP PROGRESSIVE IMAGE LOAD HANDLER
+    ========================================= */
+
+    function setupImageBlurLoader(img) {
+      function onLoaded() {
+        img.classList.add('loaded');
+        initVirtualScrollLimits();
+      }
+
+      if (img.complete && img.naturalWidth > 0) {
+        onLoaded();
+      } else {
+        img.addEventListener('load', onLoaded, { once: true });
+        img.addEventListener('error', onLoaded, { once: true });
+      }
+    }
+
+    document.querySelectorAll('.gallery-item, .tile-thumb-img').forEach(setupImageBlurLoader);
+
+    // SOFT BOUNDARY-ONLY SNAP MAGNET
+    function snapToClosestView() {
+      if (isExpanded) return;
+      
+      if (targetVirtualPos < -maxLeftShift * 0.45) {
+        targetVirtualPos = -maxLeftShift;
+      } 
+      else if (targetVirtualPos > 0 && targetVirtualPos < (paintingsAnchorPos * 0.45)) {
+        targetVirtualPos = 0;
+      }
+      else if (targetVirtualPos >= (paintingsAnchorPos * 0.45) && targetVirtualPos < paintingsAnchorPos + 30) {
+        targetVirtualPos = paintingsAnchorPos;
+      }
+      else if (targetVirtualPos > -maxLeftShift * 0.45 && targetVirtualPos <= 0) {
+        targetVirtualPos = 0;
+      }
+
+      targetVirtualPos = Math.max(-maxLeftShift, Math.min(maxRightShift, targetVirtualPos));
+
+      if (!isAnimating) {
+        requestAnimationFrame(smoothScrollLoop);
+        isAnimating = true;
+      }
     }
 
     window.addEventListener("wheel", function(e) {
@@ -2165,22 +2344,27 @@
         scrollDelta = e.deltaY;
       }
 
-      targetVirtualPos += scrollDelta * 1.5;
+      targetVirtualPos += scrollDelta * 1.35;
       targetVirtualPos = Math.max(-maxLeftShift, Math.min(maxRightShift, targetVirtualPos));
 
       if (!isAnimating) {
         requestAnimationFrame(smoothScrollLoop);
         isAnimating = true;
       }
+
+      clearTimeout(wheelTimeout);
+      wheelTimeout = setTimeout(snapToClosestView, 160);
     }, { passive: true });
 
     let touchStartX = 0;
     let touchStartY = 0;
+    let touchMoved = false;
 
     window.addEventListener("touchstart", function(e) {
       if (isExpanded || e.touches.length !== 1) return;
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+      touchMoved = false;
     }, { passive: true });
 
     window.addEventListener("touchmove", function(e) {
@@ -2190,6 +2374,10 @@
       const currentY = e.touches[0].clientY;
       const deltaX = currentX - touchStartX;
       const deltaY = currentY - touchStartY;
+
+      if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) {
+        touchMoved = true;
+      }
 
       touchStartX = currentX;
       touchStartY = currentY;
@@ -2201,7 +2389,7 @@
         swipeDelta = -deltaY;
       }
 
-      targetVirtualPos += swipeDelta * 1.8;
+      targetVirtualPos += swipeDelta * 1.6;
       targetVirtualPos = Math.max(-maxLeftShift, Math.min(maxRightShift, targetVirtualPos));
 
       if (!isAnimating) {
@@ -2210,11 +2398,17 @@
       }
     }, { passive: true });
 
+    window.addEventListener("touchend", function(e) {
+      if (touchMoved) {
+        snapToClosestView();
+      }
+    });
+
     function smoothScrollLoop() {
-      currentVirtualPos += (targetVirtualPos - currentVirtualPos) * 0.09;
+      currentVirtualPos += (targetVirtualPos - currentVirtualPos) * 0.075;
       renderTrack();
 
-      if (Math.abs(targetVirtualPos - currentVirtualPos) > 0.2) {
+      if (Math.abs(targetVirtualPos - currentVirtualPos) > 0.25) {
         requestAnimationFrame(smoothScrollLoop);
       } else {
         currentVirtualPos = targetVirtualPos;
@@ -2273,7 +2467,8 @@
       }
     }
 
-    sideNavLeft.addEventListener("click", function() {
+    sideNavLeft.addEventListener("click", function(e) {
+      e.stopPropagation();
       targetVirtualPos = -maxLeftShift;
       if (!isAnimating) {
         requestAnimationFrame(smoothScrollLoop);
@@ -2281,9 +2476,10 @@
       }
     });
 
-    sideNavRight.addEventListener("click", function() {
+    sideNavRight.addEventListener("click", function(e) {
+      e.stopPropagation();
       if (!firstPainting) return;
-      targetVirtualPos = firstPainting.offsetLeft - initialOffset;
+      targetVirtualPos = paintingsAnchorPos;
       targetVirtualPos = Math.min(maxRightShift, targetVirtualPos);
       
       if (!isAnimating) {
@@ -2395,36 +2591,34 @@
       initVirtualScrollLimits();
     });
 
-    heroTitle.addEventListener("click", resetToHome);
+    heroTitle.addEventListener("click", function(e) {
+      e.stopPropagation();
+      resetToHome();
+    });
 
+    // GLOBAL BACKGROUND CLICK TO RETURN HOME
     window.addEventListener("click", function(event) {
       if (
-        isExpanded &&
-        !event.target.closest(".grid-square-tile") &&
-        !event.target.closest(".expanding-tile-clone") &&
-        !event.target.closest(".expanded-desc-panel") &&
-        !event.target.closest("#returnToGridBtn") &&
-        !event.target.closest("#returnFromDesign")
+        event.target.closest("button") ||
+        event.target.closest("a") ||
+        event.target.closest("input") ||
+        event.target.closest(".grid-square-tile") ||
+        event.target.closest(".gallery-item") ||
+        event.target.closest(".gallery-end-card") ||
+        event.target.closest(".side-nav-anchor") ||
+        event.target.closest(".hero-title-container") ||
+        event.target.closest(".desktop-contact-block") ||
+        event.target.closest(".hero-footer")
       ) {
+        return;
+      }
+
+      if (isExpanded) {
         collapseTile();
         return;
       }
 
-      if (
-        Math.abs(currentVirtualPos) > 25 &&
-        !event.target.closest(".hero-title-container") &&
-        !event.target.closest("#themeToggle") &&
-        !event.target.closest("#desktopContactBlock") &&
-        !event.target.closest("#mobileContactBlock") &&
-        !event.target.closest("#endCard") &&
-        !event.target.closest("#zoomControl") &&
-        !event.target.closest(".grid-square-tile") &&
-        !event.target.closest(".expanding-tile-clone") &&
-        !event.target.closest(".expanded-desc-panel") &&
-        !event.target.closest("#returnToGridBtn") &&
-        !event.target.closest(".side-nav-anchor") &&
-        !event.target.closest(".floating-home-btn")
-      ) {
+      if (Math.abs(currentVirtualPos) > 10) {
         resetToHome();
       }
     });
