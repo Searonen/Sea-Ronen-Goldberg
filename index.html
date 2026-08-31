@@ -24,6 +24,12 @@
       --item-height: 48vh;
       --left-margin: 6.8vw;
       --right-margin: 6.8vw;
+
+      /* ============================================================
+         פרופורציות נעולות בין המילים (שחקי עם הערכים האלה במקום אחד!)
+         ============================================================ */
+      --line-original-ratio: 0.81; /* היחס של ORIGINAL ביחס לגודל הבסיס */
+      --line-custom-ratio: 1.2;   /* היחס של CUSTOM ו-ART ביחס לגודל הבסיס */
     }
 
     body.light-mode {
@@ -40,6 +46,19 @@
       filter: none !important;
       -webkit-box-shadow: none !important;
       -webkit-filter: none !important;
+    }
+
+    /* Absolute removal of internal SVG filters, shadows and drop-shadows in light mode */
+    body.light-mode svg,
+    body.light-mode svg * {
+      filter: none !important;
+      -webkit-filter: none !important;
+      box-shadow: none !important;
+      drop-shadow: none !important;
+    }
+
+    body.light-mode svg filter {
+      display: none !important;
     }
 
 
@@ -189,9 +208,9 @@
     }
 
 
-    /* =========================
-       TITLE & PERSISTENT ARTIST NAME
-    ========================= */
+    /* =========================================================
+       TITLE & PERSISTENT ARTIST NAME (PROPORTIONAL & LOCKED)
+    ========================================================= */
 
     .hero-title-container {
       position: absolute;
@@ -203,7 +222,7 @@
 
     .artist-persistent-name {
       display: inline-block;
-      font-size: 0.95rem;
+      font-size: clamp(0.75rem, 1.1vw, 0.95rem);
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -218,7 +237,9 @@
     }
 
     .hero-title-content {
-      margin-top: 4px;
+      /* גודל הבסיס של כל בלוק הכותרת - נמתח ומתאים את עצמו לפרופורציית המסך */
+      font-size: clamp(2.2rem, 3.2vw, 3.8rem);
+      margin-top: 5px;
       display: flex;
       flex-direction: column;
       row-gap: 4px;
@@ -236,14 +257,14 @@
     }
 
     .hero-title-content .line-original {
-      font-size: 2.4rem;
+      font-size: calc(1em * var(--line-original-ratio));
       font-weight: 800;
       letter-spacing: 0.02em;
     }
 
     .hero-title-content .line-custom,
     .hero-title-content .line-art {
-      font-size: 3.8rem;
+      font-size: calc(1em * var(--line-custom-ratio));
     }
 
 
@@ -1236,21 +1257,11 @@
         margin-bottom: 0.1rem;
       }
 
+      /* גודל הכותרת במובייל - מחושב אוטומטית ונועל את הפרופורציות */
       .hero-title-content {
-        margin-top: 2px;
-        row-gap: 2px;
-      }
-
-      .hero-title-content .line-original {
-        font-size: 1.35rem;
-        letter-spacing: 0.02em;
-        line-height: 0.92;
-      }
-
-      .hero-title-content .line-custom,
-      .hero-title-content .line-art {
-        font-size: 2.6rem;
-        line-height: 0.92;
+        font-size: clamp(1.8rem, 8.2vw, 2.6rem);
+        margin-top: 7px;
+        row-gap: 3px;
       }
 
       .side-nav-left {
@@ -1310,43 +1321,50 @@
         pointer-events: none !important;
       }
 
-      /* Compact, balanced footer spacing with fluid relative typography */
+      /* =======================================================
+         PRECISE, CONTROLLED FOOTER SPACING (BOUND TO CONTAINER)
+      ======================================================= */
+
       .hero-footer {
         left: var(--left-margin);
         right: var(--right-margin);
-        bottom: max(2.4dvh, calc(env(safe-area-inset-bottom, 0px) + 10px)) !important;
+        bottom: max(2.5dvh, calc(env(safe-area-inset-bottom, 0px) + 12px)) !important;
         width: calc(100vw - (var(--left-margin) * 2));
       }
 
       .info-block {
         display: flex;
         flex-direction: column;
-        gap: clamp(4px, 1.2vw, 8px);
+        gap: 9px;
         width: 100%;
       }
 
       .info-block .school {
-        font-size: clamp(0.85rem, 3.8vw, 1.05rem) !important;
-        font-weight: 700;
+        white-space: nowrap !important;
+        font-size: 4.15vw !important;
+        font-weight: 750;
         margin-bottom: 0;
-        line-height: 1.25;
+        line-height: 1.2;
       }
 
       .info-block .commissions {
-        display: block !important;
-        font-size: clamp(0.74rem, 3.25vw, 0.92rem) !important;
-        line-height: 1.4;
+        display: flex !important;
+        flex-direction: column;
+        gap: 3px;
+        white-space: nowrap !important;
+        font-size: 3.32vw !important;
+        font-weight: 400;
+        line-height: 1.2;
         opacity: 0.92;
-        white-space: nowrap;
       }
 
       .mobile-only-contact {
         display: block !important;
         position: static !important;
         text-align: left !important;
-        margin-top: clamp(6px, 1.8vw, 12px);
+        margin-top: 8px;
         border-top: 1.2px solid var(--accent-dim);
-        padding-top: clamp(5px, 1.4vw, 8px);
+        padding-top: 6px;
         width: 100%;
       }
 
@@ -1368,13 +1386,15 @@
       }
 
       .contact-item {
-        font-size: clamp(0.75rem, 3.2vw, 0.9rem) !important;
+        font-size: clamp(0.72rem, 2.9vw, 0.82rem) !important;
         gap: 5px !important;
       }
 
       .contact-icon {
-        width: clamp(13px, 3.6vw, 16px) !important;
-        height: clamp(13px, 3.6vw, 16px) !important;
+        width: 14px !important;
+        height: 14px !important;
+        min-width: 14px;
+        min-height: 14px;
       }
 
       .desktop-contact-block {
@@ -1389,14 +1409,6 @@
         width: auto !important;
         object-fit: contain !important;
         flex-shrink: 0 !important;
-      }
-
-      /* Specific Wide Composite Painting on Mobile */
-      .gallery-item.wide-artwork {
-        height: auto !important;
-        max-height: 48dvh !important;
-        max-width: calc(100vw - 28px) !important;
-        width: calc(100vw - 28px) !important;
       }
 
       .gallery-end-card {
@@ -1736,7 +1748,7 @@
       <img src="./paintings/29.jpeg" class="gallery-item" alt="Artwork 29" loading="eager" decoding="async">
       <img src="./paintings/18.jpeg" class="gallery-item" alt="Artwork 18" loading="eager" decoding="async">
       <img src="./paintings/3.jpeg" class="gallery-item" alt="Artwork 3" loading="eager" decoding="async">
-      <img src="./paintings/15.jpeg" class="gallery-item wide-artwork" alt="Artwork 15" loading="eager" decoding="async">
+      <img src="./paintings/15.jpeg" class="gallery-item" alt="Artwork 15" loading="eager" decoding="async">
       <img src="./paintings/5.jpeg" class="gallery-item" alt="Artwork 5" loading="eager" decoding="async">
       <img src="./paintings/11.jpeg" class="gallery-item" alt="Artwork 11" loading="eager" decoding="async">
       <img src="./paintings/8.jpeg" class="gallery-item" alt="Artwork 8" loading="eager" decoding="async">
@@ -1803,10 +1815,10 @@
         <p class="school">
           Bezalel Academy of Arts & Design student
         </p>
-        <p class="commissions">
-          Open for custom commissions:<br>
-          portraits, wedding illustrations & meaningful keepsakes
-        </p>
+        <div class="commissions">
+          <span>Open for custom commissions:</span>
+          <span>portraits, wedding illustrations & meaningful keepsakes</span>
+        </div>
 
         <div class="contact-block mobile-only-contact" id="mobileContactBlock">
           <div class="contact-links">
